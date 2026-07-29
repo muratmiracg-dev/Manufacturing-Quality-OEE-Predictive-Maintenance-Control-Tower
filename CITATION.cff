@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this portfolio project, please cite it as below."
+title: "Manufacturing Quality, OEE & Predictive Maintenance Control Tower"
+type: software
+authors:
+  - family-names: "Gedik"
+    given-names: "Murat Mirac"
+repository-code: "https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower"
+license: MIT
+version: 1.0.0
+date-released: 2026-07-29
+

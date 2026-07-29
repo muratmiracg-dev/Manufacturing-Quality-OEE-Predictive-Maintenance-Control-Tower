@@ -1,0 +1,38 @@
+{
+  "name": "Manufacturing Control Tower",
+  "dataColors": [
+    "#FF6B00",
+    "#00A6A6",
+    "#2DBE8C",
+    "#334155",
+    "#E63946",
+    "#94A3B8"
+  ],
+  "background": "#F5F2EA",
+  "foreground": "#101820",
+  "tableAccent": "#FF6B00",
+  "good": "#2DBE8C",
+  "neutral": "#94A3B8",
+  "bad": "#E63946",
+  "maximum": "#E63946",
+  "center": "#FFB000",
+  "minimum": "#2DBE8C",
+  "textClasses": {
+    "title": {
+      "fontFace": "Aptos Display",
+      "fontSize": 18,
+      "color": "#101820"
+    },
+    "header": {
+      "fontFace": "Aptos Display",
+      "fontSize": 13,
+      "color": "#101820"
+    },
+    "label": {
+      "fontFace": "Aptos",
+      "fontSize": 10,
+      "color": "#334155"
+    }
+  }
+}
+

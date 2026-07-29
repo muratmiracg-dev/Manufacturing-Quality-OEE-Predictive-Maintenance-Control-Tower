@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manufacturing-api-config
+  namespace: manufacturing-analytics
+data:
+  MODEL_BUNDLE_PATH: /app/artifacts/model/champion_bundle.joblib
+  API_PORT: "8000"
+  LOG_LEVEL: INFO
+

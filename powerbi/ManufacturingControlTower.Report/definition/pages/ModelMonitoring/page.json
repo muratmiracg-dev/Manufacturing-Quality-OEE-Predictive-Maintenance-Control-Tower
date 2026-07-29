@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/1.4.0/schema.json",
+  "name": "ModelMonitoring",
+  "displayName": "06 Model Monitoring",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920
+}
+

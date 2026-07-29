@@ -1,0 +1,38 @@
+groups:
+  - name: manufacturing-api
+    rules:
+      - alert: ManufacturingApiUnavailable
+        expr: up{job="manufacturing-recommendation-api"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Recommendation API is unavailable
+          runbook: docs/monitoring_runbook.md
+
+      - alert: ManufacturingApiHighErrorRate
+        expr: |
+          sum(rate(manufacturing_recommendation_requests_total{outcome="error"}[5m]))
+          /
+          clamp_min(sum(rate(manufacturing_recommendation_requests_total[5m])), 0.001)
+          > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: Recommendation API error rate is above 5 percent
+          runbook: docs/monitoring_runbook.md
+
+      - alert: ManufacturingApiHighLatency
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(manufacturing_recommendation_latency_seconds_bucket[5m])) by (le)
+          ) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Recommendation API p95 latency is above 1 second
+          runbook: docs/monitoring_runbook.md
+

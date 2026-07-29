@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a reproducible defect in the synthetic analytics platform.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not disclose credentials or private vulnerability details here.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Observed behavior
+      description: Include the command, configuration and safe synthetic inputs.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit SHA
+  - type: textarea
+    id: checks
+    attributes:
+      label: Relevant logs or checks
+

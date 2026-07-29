@@ -1,0 +1,451 @@
+{
+  "project": "Manufacturing Quality, OEE & Predictive Maintenance Control Tower",
+  "dataset_mode": "deterministic_fully_synthetic",
+  "seed": 20260729,
+  "period": {
+    "start": "2024-01-01",
+    "end": "2025-06-30"
+  },
+  "prediction_horizon_hours": 24,
+  "dataset": {
+    "production_shift_rows": 19692,
+    "quality_measurement_rows": 98460,
+    "downtime_event_rows": 4836,
+    "maintenance_event_rows": 1087,
+    "lines": 4,
+    "machines": 12,
+    "products": 4,
+    "shifts": 3,
+    "target_positive_rate": 0.15285395084298192
+  },
+  "executive_kpis": {
+    "availability": 0.9836288432536281,
+    "performance": 0.9099304168662006,
+    "quality_rate": 0.9526621181325136,
+    "oee": 0.8526647989314223,
+    "fpy": 0.9526621181325136,
+    "scrap_rate": 0.019885758934499065,
+    "rework_rate": 0.027452122932987426,
+    "copq": 12936905.5,
+    "unplanned_downtime_hours": 2465.7057568099763,
+    "failure_count": 1015,
+    "mtbf_hours": 145.9577283184138,
+    "mttr_hours": 1.733317671824625,
+    "total_units": 19581400
+  },
+  "spc": {
+    "metadata": {
+      "xbar_r_PRD-A": {
+        "chart": "X-bar/R",
+        "baseline_subgroups": 3015,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 25.029746559290434,
+          "lower_control_limit": 24.980965313594478,
+          "upper_control_limit": 25.07852780498639,
+          "sigma": 0.016260415231985344
+        },
+        "range_limits": {
+          "center_line": 0.08454288682141428,
+          "lower_control_limit": 0.0,
+          "upper_control_limit": 0.17872366274046977,
+          "sigma": 0.0313935919730185
+        },
+        "sigma_within": 0.036346898891407686,
+        "control_limits_are_specification_limits": false
+      },
+      "xbar_r_PRD-B": {
+        "chart": "X-bar/R",
+        "baseline_subgroups": 3015,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 80.02998001088412,
+          "lower_control_limit": 79.98133298727322,
+          "upper_control_limit": 80.07862703449501,
+          "sigma": 0.01621567453696356
+        },
+        "range_limits": {
+          "center_line": 0.08431026622338074,
+          "lower_control_limit": 0.0,
+          "upper_control_limit": 0.17823190279622686,
+          "sigma": 0.03130721219094871
+        },
+        "sigma_within": 0.036246890035847266,
+        "control_limits_are_specification_limits": false
+      },
+      "xbar_r_PRD-C": {
+        "chart": "X-bar/R",
+        "baseline_subgroups": 3015,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 42.030381507856475,
+          "lower_control_limit": 41.98128274145005,
+          "upper_control_limit": 42.0794802742629,
+          "sigma": 0.0163662554688079
+        },
+        "range_limits": {
+          "center_line": 0.0850931826801104,
+          "lower_control_limit": 0.0,
+          "upper_control_limit": 0.17988698818575338,
+          "sigma": 0.03159793516854766
+        },
+        "sigma_within": 0.0365834835254129,
+        "control_limits_are_specification_limits": false
+      },
+      "xbar_r_PRD-D": {
+        "chart": "X-bar/R",
+        "baseline_subgroups": 3015,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 60.03007765222271,
+          "lower_control_limit": 59.9812332134637,
+          "upper_control_limit": 60.07892209098171,
+          "sigma": 0.016281479586335322
+        },
+        "range_limits": {
+          "center_line": 0.08465240686136216,
+          "lower_control_limit": 0.0,
+          "upper_control_limit": 0.1789551881049196,
+          "sigma": 0.03143426041451915
+        },
+        "sigma_within": 0.03639398403325974,
+        "control_limits_are_specification_limits": false
+      },
+      "individuals_mr": {
+        "chart": "I-MR",
+        "baseline_observations": 3015,
+        "individual_limits": {
+          "center_line": 1.297434156718313,
+          "lower_control_limit": 0.8523794717071191,
+          "upper_control_limit": 1.7424888417295068,
+          "sigma": 0.14835156167039795
+        },
+        "moving_range_limits": {
+          "center_line": 0.16734056156420887,
+          "lower_control_limit": 0.0,
+          "upper_control_limit": 0.5467016146302703,
+          "sigma": 0.12650946454254192
+        },
+        "control_limits_are_specification_limits": false
+      },
+      "p_chart": {
+        "chart": "p",
+        "baseline_observations": 3015,
+        "center_line": 0.04661195978611832,
+        "variable_sample_size": true,
+        "control_limits_are_specification_limits": false
+      },
+      "u_chart": {
+        "chart": "u",
+        "baseline_observations": 3015,
+        "center_line": 0.056882997094004746,
+        "variable_units": true,
+        "control_limits_are_specification_limits": false
+      },
+      "selection_note": "X-bar/R is used for fixed n=5 CTQ subgroups; I-MR for one roughness observation per shift; p for defective proportion with variable lot sizes; u for defects per unit with variable unit counts. np and c are not selected because their constant-size assumptions do not hold.",
+      "alarm_rules": [
+        "Rule 1: one point beyond 3 sigma",
+        "Rule 2: two of three consecutive points beyond 2 sigma on one side",
+        "Rule 3: four of five consecutive points beyond 1 sigma on one side",
+        "Rule 4: eight consecutive points on one side of the center line"
+      ],
+      "control_vs_specification": "Control limits estimate baseline process behavior. LSL/USL are independent product requirements and are used only for capability."
+    },
+    "capability": [
+      {
+        "product_id": "PRD-A",
+        "mean": 25.030450025880512,
+        "lsl": 24.85,
+        "usl": 25.15,
+        "sigma_within": 0.036346898891407686,
+        "sigma_overall": 0.04353635877394299,
+        "cp": 1.3756331771077008,
+        "cpk": 1.0963794048075615,
+        "pp": 1.1484653610931996,
+        "ppk": 0.9153266946388005
+      },
+      {
+        "product_id": "PRD-B",
+        "mean": 80.0303948097921,
+        "lsl": 79.72,
+        "usl": 80.28,
+        "sigma_within": 0.036246890035847266,
+        "sigma_overall": 0.04318558394143267,
+        "cp": 2.574933552672502,
+        "cpk": 2.2954170685268767,
+        "pp": 2.1612150355523805,
+        "ppk": 1.9266088929615246
+      },
+      {
+        "product_id": "PRD-C",
+        "mean": 42.030325899929984,
+        "lsl": 41.8,
+        "usl": 42.2,
+        "sigma_within": 0.0365834835254129,
+        "sigma_overall": 0.04336560811773687,
+        "cp": 1.8223159809359675,
+        "cpk": 1.5459991205425954,
+        "pp": 1.5373165409249834,
+        "ppk": 1.3042140030209837
+      },
+      {
+        "product_id": "PRD-D",
+        "mean": 60.03083692843059,
+        "lsl": 59.78,
+        "usl": 60.22,
+        "sigma_within": 0.03639398403325974,
+        "sigma_overall": 0.04372309336426823,
+        "cp": 2.0149850389095922,
+        "cpk": 1.7325489051206762,
+        "pp": 1.67722198249731,
+        "ppk": 1.4421293723314956
+      }
+    ],
+    "xbar_signal_count": 4625
+  },
+  "model": {
+    "champion_name": "random_forest",
+    "challenger_name": "logistic_regression",
+    "threshold": {
+      "threshold": 0.1477606755877041,
+      "expected_cost_per_observation": 416.4637952559301,
+      "precision": 0.28672985781990523,
+      "recall": 0.7578288100208769,
+      "f1": 0.4160458452722063,
+      "alert_rate": 0.3951310861423221
+    },
+    "validation_metrics": {
+      "observations": 3204,
+      "positive_rate": 0.14950062421972535,
+      "pr_auc": 0.3767613880770419,
+      "roc_auc": 0.7645691520943861,
+      "brier_score": 0.10993689164565518,
+      "log_loss": 0.3632581778564586,
+      "ece_10_bin": 0.02526271625333785,
+      "threshold": 0.1477606755877041,
+      "precision": 0.28672985781990523,
+      "recall": 0.7578288100208769,
+      "f1": 0.4160458452722063,
+      "specificity": 0.6686238532110091,
+      "alert_rate": 0.3951310861423221,
+      "expected_cost_per_observation": 416.4637952559301,
+      "true_negative": 1822,
+      "false_positive": 903,
+      "false_negative": 116,
+      "true_positive": 363
+    },
+    "oot_metrics": {
+      "observations": 4356,
+      "positive_rate": 0.15426997245179064,
+      "pr_auc": 0.38865446252537994,
+      "roc_auc": 0.7489429030298329,
+      "brier_score": 0.11374825814485791,
+      "log_loss": 0.37492691749627066,
+      "ece_10_bin": 0.016351462974802753,
+      "threshold": 0.1477606755877041,
+      "precision": 0.2630457933972311,
+      "recall": 0.7351190476190477,
+      "f1": 0.38745098039215686,
+      "specificity": 0.6243213897937026,
+      "alert_rate": 0.43112947658402206,
+      "expected_cost_per_observation": 469.88062442607895,
+      "true_negative": 2300,
+      "false_positive": 1384,
+      "false_negative": 178,
+      "true_positive": 494
+    },
+    "oot_confidence_intervals": {
+      "pr_auc": {
+        "lower_95": 0.35974655601483024,
+        "median": 0.3908450259357941,
+        "upper_95": 0.42585739208750567,
+        "resamples": 250
+      },
+      "roc_auc": {
+        "lower_95": 0.7288546443841233,
+        "median": 0.7486303555533753,
+        "upper_95": 0.7665264482124614,
+        "resamples": 250
+      },
+      "brier_score": {
+        "lower_95": 0.10670107243538746,
+        "median": 0.11350927517825946,
+        "upper_95": 0.12035151562460776,
+        "resamples": 250
+      }
+    },
+    "candidate_summary": {
+      "random_forest": {
+        "selection_score": 0.4056531129082411,
+        "validation_at_0_5": {
+          "observations": 3204,
+          "positive_rate": 0.14950062421972535,
+          "pr_auc": 0.3767613880770419,
+          "roc_auc": 0.7645691520943861,
+          "brier_score": 0.10993689164565518,
+          "log_loss": 0.3632581778564586,
+          "ece_10_bin": 0.02526271625333785,
+          "threshold": 0.5,
+          "precision": 0.5645161290322581,
+          "recall": 0.07306889352818371,
+          "f1": 0.12939001848428835,
+          "specificity": 0.9900917431192661,
+          "alert_rate": 0.019350811485642945,
+          "expected_cost_per_observation": 1112.4063670411986,
+          "true_negative": 2698,
+          "false_positive": 27,
+          "false_negative": 444,
+          "true_positive": 35
+        }
+      },
+      "logistic_regression": {
+        "selection_score": 0.40529255817384874,
+        "validation_at_0_5": {
+          "observations": 3204,
+          "positive_rate": 0.14950062421972535,
+          "pr_auc": 0.3770554755864405,
+          "roc_auc": 0.7621849801765912,
+          "brier_score": 0.11083270771977785,
+          "log_loss": 0.3663676317305208,
+          "ece_10_bin": 0.032261610374364535,
+          "threshold": 0.5,
+          "precision": 0.5522388059701493,
+          "recall": 0.07724425887265135,
+          "f1": 0.13553113553113552,
+          "specificity": 0.9889908256880734,
+          "alert_rate": 0.020911360799001247,
+          "expected_cost_per_observation": 1107.8339575530588,
+          "true_negative": 2695,
+          "false_positive": 30,
+          "false_negative": 442,
+          "true_positive": 37
+        }
+      }
+    },
+    "partitions": {
+      "model_fit": {
+        "rows": 9828,
+        "start": "2024-01-01 00:00:00",
+        "end": "2024-09-29 16:00:00",
+        "positive_rate": 0.15354090354090355
+      },
+      "calibration": {
+        "rows": 2160,
+        "start": "2024-10-01 00:00:00",
+        "end": "2024-11-29 16:00:00",
+        "positive_rate": 0.15694444444444444
+      },
+      "validation": {
+        "rows": 3204,
+        "start": "2024-12-01 00:00:00",
+        "end": "2025-02-27 16:00:00",
+        "positive_rate": 0.14950062421972535
+      },
+      "oot": {
+        "rows": 4356,
+        "start": "2025-03-01 00:00:00",
+        "end": "2025-06-29 16:00:00",
+        "positive_rate": 0.15426997245179064
+      }
+    },
+    "cost_assumptions": {
+      "false_negative_cost": 8000.0,
+      "false_positive_cost": 450.0,
+      "minimum_recall": 0.72,
+      "maximum_alert_rate": 0.4,
+      "intervention_effectiveness": 0.65
+    }
+  },
+  "explainability": {
+    "model_name": "random_forest",
+    "explained_rows": 700,
+    "transformed_feature_count": 44,
+    "top_global_drivers": [
+      {
+        "base_feature": "tool_wear_pct",
+        "reason_code": "TOOL_WEAR_ELEVATED",
+        "mean_absolute_shap": 0.049344353781791604
+      },
+      {
+        "base_feature": "lubrication_index",
+        "reason_code": "LOW_LUBRICATION_INDEX",
+        "mean_absolute_shap": 0.038840114687937695
+      },
+      {
+        "base_feature": "hours_since_maintenance",
+        "reason_code": "MAINTENANCE_INTERVAL_EXCEEDED",
+        "mean_absolute_shap": 0.03654667579944734
+      },
+      {
+        "base_feature": "temperature_c",
+        "reason_code": "THERMAL_STRESS",
+        "mean_absolute_shap": 0.030743024754742814
+      },
+      {
+        "base_feature": "vibration_rolling_3",
+        "reason_code": "SUSTAINED_VIBRATION",
+        "mean_absolute_shap": 0.023821354875954152
+      },
+      {
+        "base_feature": "pressure_bar",
+        "reason_code": "PRESSURE_DEVIATION",
+        "mean_absolute_shap": 0.020951853400612955
+      },
+      {
+        "base_feature": "vibration_rms",
+        "reason_code": "HIGH_VIBRATION_PATTERN",
+        "mean_absolute_shap": 0.019802522591177964
+      },
+      {
+        "base_feature": "downtime_last_7d_min",
+        "reason_code": "RECENT_DOWNTIME_BURDEN",
+        "mean_absolute_shap": 0.016439816521723678
+      },
+      {
+        "base_feature": "machine_id",
+        "reason_code": "MACHINE_BASELINE_EFFECT",
+        "mean_absolute_shap": 0.009683560726933587
+      },
+      {
+        "base_feature": "defect_rate_lag_1",
+        "reason_code": "MODEL_DRIVER_DEFECT_RATE_LAG_1",
+        "mean_absolute_shap": 0.009294380631756596
+      }
+    ],
+    "scope_note": "SHAP explains the fitted base estimator. The sigmoid calibration layer changes reported probabilities but is not included in the attribution."
+  },
+  "decision_support": {
+    "recommendation_counts": {
+      "MONITOR": 7,
+      "P1": 5
+    },
+    "human_approval_required": true,
+    "execution_mode": "recommendation_only"
+  },
+  "monitoring": {
+    "alarm_quality": {
+      "alerts": 1878,
+      "alerts_per_day": 15.65,
+      "alert_precision": 0.2630457933972311,
+      "failure_capture_rate": 0.7351190476190477,
+      "median_lead_time_hours": 16.0,
+      "false_alerts": 1384,
+      "missed_failures": 178
+    },
+    "max_psi": 8.899345677701184,
+    "features_at_action_level": 3,
+    "data_quality_checks_passed": 5,
+    "data_quality_checks_total": 5
+  },
+  "figures": [
+    "oee_monthly_trend.png",
+    "downtime_pareto.png",
+    "process_capability.png",
+    "spc_xbar.png",
+    "model_calibration.png",
+    "oot_confusion_matrix.png",
+    "shap_global_importance.png",
+    "maintenance_priority.png",
+    "feature_drift.png"
+  ]
+}

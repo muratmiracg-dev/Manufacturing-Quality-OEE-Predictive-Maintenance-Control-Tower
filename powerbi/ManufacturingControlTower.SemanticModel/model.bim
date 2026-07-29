@@ -1,0 +1,134 @@
+{
+  "name": "ManufacturingControlTower",
+  "compatibilityLevel": 1601,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "OEE Daily",
+        "columns": [
+          {"name": "Production Date", "dataType": "dateTime", "sourceColumn": "production_date", "formatString": "yyyy-mm-dd"},
+          {"name": "Line", "dataType": "string", "sourceColumn": "line_id"},
+          {"name": "Availability", "dataType": "double", "sourceColumn": "availability", "formatString": "0.00%"},
+          {"name": "Performance", "dataType": "double", "sourceColumn": "performance", "formatString": "0.00%"},
+          {"name": "Quality", "dataType": "double", "sourceColumn": "quality", "formatString": "0.00%"},
+          {"name": "OEE", "dataType": "double", "sourceColumn": "oee", "formatString": "0.00%"},
+          {"name": "Total Units", "dataType": "int64", "sourceColumn": "total_units", "formatString": "#,##0"},
+          {"name": "COPQ", "dataType": "decimal", "sourceColumn": "copq", "formatString": "#,##0"}
+        ],
+        "measures": [
+          {"name": "Plant OEE", "expression": "DIVIDE(SUMX('OEE Daily', 'OEE Daily'[OEE] * 'OEE Daily'[Total Units]), SUM('OEE Daily'[Total Units]))", "formatString": "0.00%"},
+          {"name": "Plant Availability", "expression": "DIVIDE(SUMX('OEE Daily', 'OEE Daily'[Availability] * 'OEE Daily'[Total Units]), SUM('OEE Daily'[Total Units]))", "formatString": "0.00%"},
+          {"name": "Plant Performance", "expression": "DIVIDE(SUMX('OEE Daily', 'OEE Daily'[Performance] * 'OEE Daily'[Total Units]), SUM('OEE Daily'[Total Units]))", "formatString": "0.00%"},
+          {"name": "Plant Quality", "expression": "DIVIDE(SUMX('OEE Daily', 'OEE Daily'[Quality] * 'OEE Daily'[Total Units]), SUM('OEE Daily'[Total Units]))", "formatString": "0.00%"},
+          {"name": "Total COPQ", "expression": "SUM('OEE Daily'[COPQ])", "formatString": "#,##0"}
+        ],
+        "partitions": [
+          {
+            "name": "OEE Daily",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"localhost\", \"manufacturing\"),",
+                "    View = Source{[Schema=\"manufacturing\", Item=\"vw_oee_daily\"]}[Data]",
+                "in",
+                "    View"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Downtime Pareto",
+        "columns": [
+          {"name": "Category", "dataType": "string", "sourceColumn": "category"},
+          {"name": "Duration Minutes", "dataType": "double", "sourceColumn": "duration_min", "formatString": "#,##0.0"},
+          {"name": "Event Count", "dataType": "int64", "sourceColumn": "event_count", "formatString": "#,##0"},
+          {"name": "Production Loss Cost", "dataType": "decimal", "sourceColumn": "production_loss_cost", "formatString": "#,##0"},
+          {"name": "Downtime Share", "dataType": "double", "sourceColumn": "downtime_share", "formatString": "0.00%"},
+          {"name": "Cumulative Share", "dataType": "double", "sourceColumn": "cumulative_share", "formatString": "0.00%"}
+        ],
+        "partitions": [
+          {
+            "name": "Downtime Pareto",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"localhost\", \"manufacturing\"),",
+                "    View = Source{[Schema=\"manufacturing\", Item=\"vw_downtime_pareto\"]}[Data]",
+                "in",
+                "    View"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Quality COPQ",
+        "columns": [
+          {"name": "Month", "dataType": "dateTime", "sourceColumn": "month", "formatString": "yyyy-mm"},
+          {"name": "Line", "dataType": "string", "sourceColumn": "line_id"},
+          {"name": "Product", "dataType": "string", "sourceColumn": "product_id"},
+          {"name": "FPY", "dataType": "double", "sourceColumn": "fpy", "formatString": "0.00%"},
+          {"name": "Scrap Rate", "dataType": "double", "sourceColumn": "scrap_rate", "formatString": "0.00%"},
+          {"name": "Rework Rate", "dataType": "double", "sourceColumn": "rework_rate", "formatString": "0.00%"},
+          {"name": "COPQ", "dataType": "decimal", "sourceColumn": "copq", "formatString": "#,##0"}
+        ],
+        "partitions": [
+          {
+            "name": "Quality COPQ",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"localhost\", \"manufacturing\"),",
+                "    View = Source{[Schema=\"manufacturing\", Item=\"vw_quality_copq\"]}[Data]",
+                "in",
+                "    View"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Maintenance Priority",
+        "columns": [
+          {"name": "Machine", "dataType": "string", "sourceColumn": "machine_id"},
+          {"name": "Line", "dataType": "string", "sourceColumn": "line_id"},
+          {"name": "Model", "dataType": "string", "sourceColumn": "model_name"},
+          {"name": "Failure Probability", "dataType": "double", "sourceColumn": "failure_probability", "formatString": "0.00%"},
+          {"name": "Threshold", "dataType": "double", "sourceColumn": "threshold", "formatString": "0.00%"},
+          {"name": "Priority", "dataType": "string", "sourceColumn": "priority"},
+          {"name": "Recommended Action", "dataType": "string", "sourceColumn": "recommended_action"},
+          {"name": "Expected Net Benefit", "dataType": "decimal", "sourceColumn": "expected_net_benefit", "formatString": "#,##0"},
+          {"name": "Human Approval Required", "dataType": "boolean", "sourceColumn": "human_approval_required"},
+          {"name": "Observed At", "dataType": "dateTime", "sourceColumn": "observed_at", "formatString": "yyyy-mm-dd hh:mm"}
+        ],
+        "partitions": [
+          {
+            "name": "Maintenance Priority",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"localhost\", \"manufacturing\"),",
+                "    View = Source{[Schema=\"manufacturing\", Item=\"vw_maintenance_priority\"]}[Data]",
+                "in",
+                "    View"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+

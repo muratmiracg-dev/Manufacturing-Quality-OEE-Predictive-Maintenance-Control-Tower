@@ -1,0 +1,117 @@
+{
+  "alarm_rules": [
+    "Rule 1: one point beyond 3 sigma",
+    "Rule 2: two of three consecutive points beyond 2 sigma on one side",
+    "Rule 3: four of five consecutive points beyond 1 sigma on one side",
+    "Rule 4: eight consecutive points on one side of the center line"
+  ],
+  "control_vs_specification": "Control limits estimate baseline process behavior. LSL/USL are independent product requirements and are used only for capability.",
+  "individuals_mr": {
+    "baseline_observations": 3015,
+    "chart": "I-MR",
+    "control_limits_are_specification_limits": false,
+    "individual_limits": {
+      "center_line": 1.297434156718313,
+      "lower_control_limit": 0.8523794717071191,
+      "sigma": 0.14835156167039795,
+      "upper_control_limit": 1.7424888417295068
+    },
+    "moving_range_limits": {
+      "center_line": 0.16734056156420887,
+      "lower_control_limit": 0.0,
+      "sigma": 0.12650946454254192,
+      "upper_control_limit": 0.5467016146302703
+    }
+  },
+  "p_chart": {
+    "baseline_observations": 3015,
+    "center_line": 0.04661195978611832,
+    "chart": "p",
+    "control_limits_are_specification_limits": false,
+    "variable_sample_size": true
+  },
+  "selection_note": "X-bar/R is used for fixed n=5 CTQ subgroups; I-MR for one roughness observation per shift; p for defective proportion with variable lot sizes; u for defects per unit with variable unit counts. np and c are not selected because their constant-size assumptions do not hold.",
+  "u_chart": {
+    "baseline_observations": 3015,
+    "center_line": 0.056882997094004746,
+    "chart": "u",
+    "control_limits_are_specification_limits": false,
+    "variable_units": true
+  },
+  "xbar_r_PRD-A": {
+    "baseline_subgroups": 3015,
+    "chart": "X-bar/R",
+    "control_limits_are_specification_limits": false,
+    "range_limits": {
+      "center_line": 0.08454288682141428,
+      "lower_control_limit": 0.0,
+      "sigma": 0.0313935919730185,
+      "upper_control_limit": 0.17872366274046977
+    },
+    "sigma_within": 0.036346898891407686,
+    "subgroup_size": 5,
+    "xbar_limits": {
+      "center_line": 25.029746559290434,
+      "lower_control_limit": 24.980965313594478,
+      "sigma": 0.016260415231985344,
+      "upper_control_limit": 25.07852780498639
+    }
+  },
+  "xbar_r_PRD-B": {
+    "baseline_subgroups": 3015,
+    "chart": "X-bar/R",
+    "control_limits_are_specification_limits": false,
+    "range_limits": {
+      "center_line": 0.08431026622338074,
+      "lower_control_limit": 0.0,
+      "sigma": 0.03130721219094871,
+      "upper_control_limit": 0.17823190279622686
+    },
+    "sigma_within": 0.036246890035847266,
+    "subgroup_size": 5,
+    "xbar_limits": {
+      "center_line": 80.02998001088412,
+      "lower_control_limit": 79.98133298727322,
+      "sigma": 0.01621567453696356,
+      "upper_control_limit": 80.07862703449501
+    }
+  },
+  "xbar_r_PRD-C": {
+    "baseline_subgroups": 3015,
+    "chart": "X-bar/R",
+    "control_limits_are_specification_limits": false,
+    "range_limits": {
+      "center_line": 0.0850931826801104,
+      "lower_control_limit": 0.0,
+      "sigma": 0.03159793516854766,
+      "upper_control_limit": 0.17988698818575338
+    },
+    "sigma_within": 0.0365834835254129,
+    "subgroup_size": 5,
+    "xbar_limits": {
+      "center_line": 42.030381507856475,
+      "lower_control_limit": 41.98128274145005,
+      "sigma": 0.0163662554688079,
+      "upper_control_limit": 42.0794802742629
+    }
+  },
+  "xbar_r_PRD-D": {
+    "baseline_subgroups": 3015,
+    "chart": "X-bar/R",
+    "control_limits_are_specification_limits": false,
+    "range_limits": {
+      "center_line": 0.08465240686136216,
+      "lower_control_limit": 0.0,
+      "sigma": 0.03143426041451915,
+      "upper_control_limit": 0.1789551881049196
+    },
+    "sigma_within": 0.03639398403325974,
+    "subgroup_size": 5,
+    "xbar_limits": {
+      "center_line": 60.03007765222271,
+      "lower_control_limit": 59.9812332134637,
+      "sigma": 0.016281479586335322,
+      "upper_control_limit": 60.07892209098171
+    }
+  }
+}

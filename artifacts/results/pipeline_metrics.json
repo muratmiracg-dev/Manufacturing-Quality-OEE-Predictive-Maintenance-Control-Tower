@@ -1,0 +1,451 @@
+{
+  "dataset": {
+    "downtime_event_rows": 4836,
+    "lines": 4,
+    "machines": 12,
+    "maintenance_event_rows": 1087,
+    "production_shift_rows": 19692,
+    "products": 4,
+    "quality_measurement_rows": 98460,
+    "shifts": 3,
+    "target_positive_rate": 0.15285395084298192
+  },
+  "dataset_mode": "deterministic_fully_synthetic",
+  "decision_support": {
+    "execution_mode": "recommendation_only",
+    "human_approval_required": true,
+    "recommendation_counts": {
+      "MONITOR": 7,
+      "P1": 5
+    }
+  },
+  "executive_kpis": {
+    "availability": 0.9836288432536281,
+    "copq": 12936905.5,
+    "failure_count": 1015,
+    "fpy": 0.9526621181325136,
+    "mtbf_hours": 145.9577283184138,
+    "mttr_hours": 1.733317671824625,
+    "oee": 0.8526647989314223,
+    "performance": 0.9099304168662006,
+    "quality_rate": 0.9526621181325136,
+    "rework_rate": 0.027452122932987426,
+    "scrap_rate": 0.019885758934499065,
+    "total_units": 19581400,
+    "unplanned_downtime_hours": 2465.7057568099763
+  },
+  "explainability": {
+    "explained_rows": 700,
+    "model_name": "random_forest",
+    "scope_note": "SHAP explains the fitted base estimator. The sigmoid calibration layer changes reported probabilities but is not included in the attribution.",
+    "top_global_drivers": [
+      {
+        "base_feature": "tool_wear_pct",
+        "mean_absolute_shap": 0.049344353781791604,
+        "reason_code": "TOOL_WEAR_ELEVATED"
+      },
+      {
+        "base_feature": "lubrication_index",
+        "mean_absolute_shap": 0.038840114687937695,
+        "reason_code": "LOW_LUBRICATION_INDEX"
+      },
+      {
+        "base_feature": "hours_since_maintenance",
+        "mean_absolute_shap": 0.03654667579944734,
+        "reason_code": "MAINTENANCE_INTERVAL_EXCEEDED"
+      },
+      {
+        "base_feature": "temperature_c",
+        "mean_absolute_shap": 0.030743024754742814,
+        "reason_code": "THERMAL_STRESS"
+      },
+      {
+        "base_feature": "vibration_rolling_3",
+        "mean_absolute_shap": 0.023821354875954152,
+        "reason_code": "SUSTAINED_VIBRATION"
+      },
+      {
+        "base_feature": "pressure_bar",
+        "mean_absolute_shap": 0.020951853400612955,
+        "reason_code": "PRESSURE_DEVIATION"
+      },
+      {
+        "base_feature": "vibration_rms",
+        "mean_absolute_shap": 0.019802522591177964,
+        "reason_code": "HIGH_VIBRATION_PATTERN"
+      },
+      {
+        "base_feature": "downtime_last_7d_min",
+        "mean_absolute_shap": 0.016439816521723678,
+        "reason_code": "RECENT_DOWNTIME_BURDEN"
+      },
+      {
+        "base_feature": "machine_id",
+        "mean_absolute_shap": 0.009683560726933587,
+        "reason_code": "MACHINE_BASELINE_EFFECT"
+      },
+      {
+        "base_feature": "defect_rate_lag_1",
+        "mean_absolute_shap": 0.009294380631756596,
+        "reason_code": "MODEL_DRIVER_DEFECT_RATE_LAG_1"
+      }
+    ],
+    "transformed_feature_count": 44
+  },
+  "figures": [
+    "oee_monthly_trend.png",
+    "downtime_pareto.png",
+    "process_capability.png",
+    "spc_xbar.png",
+    "model_calibration.png",
+    "oot_confusion_matrix.png",
+    "shap_global_importance.png",
+    "maintenance_priority.png",
+    "feature_drift.png"
+  ],
+  "model": {
+    "candidate_summary": {
+      "logistic_regression": {
+        "selection_score": 0.40529255817384874,
+        "validation_at_0_5": {
+          "alert_rate": 0.020911360799001247,
+          "brier_score": 0.11083270771977785,
+          "ece_10_bin": 0.032261610374364535,
+          "expected_cost_per_observation": 1107.8339575530588,
+          "f1": 0.13553113553113552,
+          "false_negative": 442,
+          "false_positive": 30,
+          "log_loss": 0.3663676317305208,
+          "observations": 3204,
+          "positive_rate": 0.14950062421972535,
+          "pr_auc": 0.3770554755864405,
+          "precision": 0.5522388059701493,
+          "recall": 0.07724425887265135,
+          "roc_auc": 0.7621849801765912,
+          "specificity": 0.9889908256880734,
+          "threshold": 0.5,
+          "true_negative": 2695,
+          "true_positive": 37
+        }
+      },
+      "random_forest": {
+        "selection_score": 0.4056531129082411,
+        "validation_at_0_5": {
+          "alert_rate": 0.019350811485642945,
+          "brier_score": 0.10993689164565518,
+          "ece_10_bin": 0.02526271625333785,
+          "expected_cost_per_observation": 1112.4063670411986,
+          "f1": 0.12939001848428835,
+          "false_negative": 444,
+          "false_positive": 27,
+          "log_loss": 0.3632581778564586,
+          "observations": 3204,
+          "positive_rate": 0.14950062421972535,
+          "pr_auc": 0.3767613880770419,
+          "precision": 0.5645161290322581,
+          "recall": 0.07306889352818371,
+          "roc_auc": 0.7645691520943861,
+          "specificity": 0.9900917431192661,
+          "threshold": 0.5,
+          "true_negative": 2698,
+          "true_positive": 35
+        }
+      }
+    },
+    "challenger_name": "logistic_regression",
+    "champion_name": "random_forest",
+    "cost_assumptions": {
+      "false_negative_cost": 8000.0,
+      "false_positive_cost": 450.0,
+      "intervention_effectiveness": 0.65,
+      "maximum_alert_rate": 0.4,
+      "minimum_recall": 0.72
+    },
+    "oot_confidence_intervals": {
+      "brier_score": {
+        "lower_95": 0.10670107243538746,
+        "median": 0.11350927517825946,
+        "resamples": 250,
+        "upper_95": 0.12035151562460776
+      },
+      "pr_auc": {
+        "lower_95": 0.35974655601483024,
+        "median": 0.3908450259357941,
+        "resamples": 250,
+        "upper_95": 0.42585739208750567
+      },
+      "roc_auc": {
+        "lower_95": 0.7288546443841233,
+        "median": 0.7486303555533753,
+        "resamples": 250,
+        "upper_95": 0.7665264482124614
+      }
+    },
+    "oot_metrics": {
+      "alert_rate": 0.43112947658402206,
+      "brier_score": 0.11374825814485791,
+      "ece_10_bin": 0.016351462974802753,
+      "expected_cost_per_observation": 469.88062442607895,
+      "f1": 0.38745098039215686,
+      "false_negative": 178,
+      "false_positive": 1384,
+      "log_loss": 0.37492691749627066,
+      "observations": 4356,
+      "positive_rate": 0.15426997245179064,
+      "pr_auc": 0.38865446252537994,
+      "precision": 0.2630457933972311,
+      "recall": 0.7351190476190477,
+      "roc_auc": 0.7489429030298329,
+      "specificity": 0.6243213897937026,
+      "threshold": 0.1477606755877041,
+      "true_negative": 2300,
+      "true_positive": 494
+    },
+    "partitions": {
+      "calibration": {
+        "end": "2024-11-29 16:00:00",
+        "positive_rate": 0.15694444444444444,
+        "rows": 2160,
+        "start": "2024-10-01 00:00:00"
+      },
+      "model_fit": {
+        "end": "2024-09-29 16:00:00",
+        "positive_rate": 0.15354090354090355,
+        "rows": 9828,
+        "start": "2024-01-01 00:00:00"
+      },
+      "oot": {
+        "end": "2025-06-29 16:00:00",
+        "positive_rate": 0.15426997245179064,
+        "rows": 4356,
+        "start": "2025-03-01 00:00:00"
+      },
+      "validation": {
+        "end": "2025-02-27 16:00:00",
+        "positive_rate": 0.14950062421972535,
+        "rows": 3204,
+        "start": "2024-12-01 00:00:00"
+      }
+    },
+    "threshold": {
+      "alert_rate": 0.3951310861423221,
+      "expected_cost_per_observation": 416.4637952559301,
+      "f1": 0.4160458452722063,
+      "precision": 0.28672985781990523,
+      "recall": 0.7578288100208769,
+      "threshold": 0.1477606755877041
+    },
+    "validation_metrics": {
+      "alert_rate": 0.3951310861423221,
+      "brier_score": 0.10993689164565518,
+      "ece_10_bin": 0.02526271625333785,
+      "expected_cost_per_observation": 416.4637952559301,
+      "f1": 0.4160458452722063,
+      "false_negative": 116,
+      "false_positive": 903,
+      "log_loss": 0.3632581778564586,
+      "observations": 3204,
+      "positive_rate": 0.14950062421972535,
+      "pr_auc": 0.3767613880770419,
+      "precision": 0.28672985781990523,
+      "recall": 0.7578288100208769,
+      "roc_auc": 0.7645691520943861,
+      "specificity": 0.6686238532110091,
+      "threshold": 0.1477606755877041,
+      "true_negative": 1822,
+      "true_positive": 363
+    }
+  },
+  "monitoring": {
+    "alarm_quality": {
+      "alert_precision": 0.2630457933972311,
+      "alerts": 1878,
+      "alerts_per_day": 15.65,
+      "failure_capture_rate": 0.7351190476190477,
+      "false_alerts": 1384,
+      "median_lead_time_hours": 16.0,
+      "missed_failures": 178
+    },
+    "data_quality_checks_passed": 5,
+    "data_quality_checks_total": 5,
+    "features_at_action_level": 3,
+    "max_psi": 8.899345677701184
+  },
+  "period": {
+    "end": "2025-06-30",
+    "start": "2024-01-01"
+  },
+  "prediction_horizon_hours": 24,
+  "project": "Manufacturing Quality, OEE & Predictive Maintenance Control Tower",
+  "seed": 20260729,
+  "spc": {
+    "capability": [
+      {
+        "cp": 1.3756331771077008,
+        "cpk": 1.0963794048075615,
+        "lsl": 24.85,
+        "mean": 25.030450025880512,
+        "pp": 1.1484653610931996,
+        "ppk": 0.9153266946388005,
+        "product_id": "PRD-A",
+        "sigma_overall": 0.04353635877394299,
+        "sigma_within": 0.036346898891407686,
+        "usl": 25.15
+      },
+      {
+        "cp": 2.574933552672502,
+        "cpk": 2.2954170685268767,
+        "lsl": 79.72,
+        "mean": 80.0303948097921,
+        "pp": 2.1612150355523805,
+        "ppk": 1.9266088929615246,
+        "product_id": "PRD-B",
+        "sigma_overall": 0.04318558394143267,
+        "sigma_within": 0.036246890035847266,
+        "usl": 80.28
+      },
+      {
+        "cp": 1.8223159809359675,
+        "cpk": 1.5459991205425954,
+        "lsl": 41.8,
+        "mean": 42.030325899929984,
+        "pp": 1.5373165409249834,
+        "ppk": 1.3042140030209837,
+        "product_id": "PRD-C",
+        "sigma_overall": 0.04336560811773687,
+        "sigma_within": 0.0365834835254129,
+        "usl": 42.2
+      },
+      {
+        "cp": 2.0149850389095922,
+        "cpk": 1.7325489051206762,
+        "lsl": 59.78,
+        "mean": 60.03083692843059,
+        "pp": 1.67722198249731,
+        "ppk": 1.4421293723314956,
+        "product_id": "PRD-D",
+        "sigma_overall": 0.04372309336426823,
+        "sigma_within": 0.03639398403325974,
+        "usl": 60.22
+      }
+    ],
+    "metadata": {
+      "alarm_rules": [
+        "Rule 1: one point beyond 3 sigma",
+        "Rule 2: two of three consecutive points beyond 2 sigma on one side",
+        "Rule 3: four of five consecutive points beyond 1 sigma on one side",
+        "Rule 4: eight consecutive points on one side of the center line"
+      ],
+      "control_vs_specification": "Control limits estimate baseline process behavior. LSL/USL are independent product requirements and are used only for capability.",
+      "individuals_mr": {
+        "baseline_observations": 3015,
+        "chart": "I-MR",
+        "control_limits_are_specification_limits": false,
+        "individual_limits": {
+          "center_line": 1.297434156718313,
+          "lower_control_limit": 0.8523794717071191,
+          "sigma": 0.14835156167039795,
+          "upper_control_limit": 1.7424888417295068
+        },
+        "moving_range_limits": {
+          "center_line": 0.16734056156420887,
+          "lower_control_limit": 0.0,
+          "sigma": 0.12650946454254192,
+          "upper_control_limit": 0.5467016146302703
+        }
+      },
+      "p_chart": {
+        "baseline_observations": 3015,
+        "center_line": 0.04661195978611832,
+        "chart": "p",
+        "control_limits_are_specification_limits": false,
+        "variable_sample_size": true
+      },
+      "selection_note": "X-bar/R is used for fixed n=5 CTQ subgroups; I-MR for one roughness observation per shift; p for defective proportion with variable lot sizes; u for defects per unit with variable unit counts. np and c are not selected because their constant-size assumptions do not hold.",
+      "u_chart": {
+        "baseline_observations": 3015,
+        "center_line": 0.056882997094004746,
+        "chart": "u",
+        "control_limits_are_specification_limits": false,
+        "variable_units": true
+      },
+      "xbar_r_PRD-A": {
+        "baseline_subgroups": 3015,
+        "chart": "X-bar/R",
+        "control_limits_are_specification_limits": false,
+        "range_limits": {
+          "center_line": 0.08454288682141428,
+          "lower_control_limit": 0.0,
+          "sigma": 0.0313935919730185,
+          "upper_control_limit": 0.17872366274046977
+        },
+        "sigma_within": 0.036346898891407686,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 25.029746559290434,
+          "lower_control_limit": 24.980965313594478,
+          "sigma": 0.016260415231985344,
+          "upper_control_limit": 25.07852780498639
+        }
+      },
+      "xbar_r_PRD-B": {
+        "baseline_subgroups": 3015,
+        "chart": "X-bar/R",
+        "control_limits_are_specification_limits": false,
+        "range_limits": {
+          "center_line": 0.08431026622338074,
+          "lower_control_limit": 0.0,
+          "sigma": 0.03130721219094871,
+          "upper_control_limit": 0.17823190279622686
+        },
+        "sigma_within": 0.036246890035847266,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 80.02998001088412,
+          "lower_control_limit": 79.98133298727322,
+          "sigma": 0.01621567453696356,
+          "upper_control_limit": 80.07862703449501
+        }
+      },
+      "xbar_r_PRD-C": {
+        "baseline_subgroups": 3015,
+        "chart": "X-bar/R",
+        "control_limits_are_specification_limits": false,
+        "range_limits": {
+          "center_line": 0.0850931826801104,
+          "lower_control_limit": 0.0,
+          "sigma": 0.03159793516854766,
+          "upper_control_limit": 0.17988698818575338
+        },
+        "sigma_within": 0.0365834835254129,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 42.030381507856475,
+          "lower_control_limit": 41.98128274145005,
+          "sigma": 0.0163662554688079,
+          "upper_control_limit": 42.0794802742629
+        }
+      },
+      "xbar_r_PRD-D": {
+        "baseline_subgroups": 3015,
+        "chart": "X-bar/R",
+        "control_limits_are_specification_limits": false,
+        "range_limits": {
+          "center_line": 0.08465240686136216,
+          "lower_control_limit": 0.0,
+          "sigma": 0.03143426041451915,
+          "upper_control_limit": 0.1789551881049196
+        },
+        "sigma_within": 0.03639398403325974,
+        "subgroup_size": 5,
+        "xbar_limits": {
+          "center_line": 60.03007765222271,
+          "lower_control_limit": 59.9812332134637,
+          "sigma": 0.016281479586335322,
+          "upper_control_limit": 60.07892209098171
+        }
+      }
+    },
+    "xbar_signal_count": 4625
+  }
+}

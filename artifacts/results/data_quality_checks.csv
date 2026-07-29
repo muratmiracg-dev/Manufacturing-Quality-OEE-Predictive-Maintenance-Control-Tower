@@ -1,0 +1,6 @@
+check,passed,exceptions
+primary_key_unique,True,0
+required_fields_complete,True,16682
+non_negative_counts,True,0
+downtime_within_shift,True,0
+sensor_ranges_plausible,True,0

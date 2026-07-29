@@ -1,0 +1,90 @@
+services:
+  api:
+    build:
+      context: .
+    image: manufacturing-control-tower:local
+    environment:
+      MODEL_BUNDLE_PATH: /app/artifacts/model/champion_bundle.joblib
+      API_PORT: "8000"
+    ports:
+      - "8000:8000"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)",
+        ]
+      interval: 20s
+      timeout: 3s
+      retries: 5
+    networks:
+      - control-tower
+
+  postgres:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_DB: manufacturing
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-synthetic-demo-only}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./sql/views.sql:/docker-entrypoint-initdb.d/02_views.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U manufacturing -d manufacturing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - control-tower
+
+  prometheus:
+    image: prom/prometheus:v3.6.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=7d
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - control-tower
+
+  grafana:
+    image: grafana/grafana:12.1.1
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-synthetic-demo-only}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - control-tower
+
+volumes:
+  postgres-data:
+
+networks:
+  control-tower:
+    driver: bridge
+

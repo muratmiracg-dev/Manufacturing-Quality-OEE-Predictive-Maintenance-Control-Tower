@@ -1,0 +1,11 @@
+.git
+.github
+.venv
+artifacts/*
+!artifacts/model/
+!artifacts/model/**
+data/generated
+deliverables
+htmlcov
+node_modules
+tests

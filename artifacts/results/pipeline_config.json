@@ -1,0 +1,17 @@
+{
+  "artifact_dir": "artifacts",
+  "data_dir": "data/generated",
+  "end_date": "2025-06-30",
+  "false_negative_cost": 8000.0,
+  "false_positive_cost": 450.0,
+  "intervention_effectiveness": 0.65,
+  "maximum_alert_rate": 0.4,
+  "minimum_recall": 0.72,
+  "oot_start": "2025-03-01",
+  "prediction_horizon_hours": 24,
+  "sample_machine_limit": null,
+  "seed": 20260729,
+  "start_date": "2024-01-01",
+  "subgroup_size": 5,
+  "validation_start": "2024-12-01"
+}

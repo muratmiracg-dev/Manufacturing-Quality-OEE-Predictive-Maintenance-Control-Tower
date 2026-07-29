@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.env
+.DS_Store
+.idea/
+.vscode/
+build/
+dist/
+*.egg-info/
+data/generated/
+tmp/
+node_modules/
+*.inspect.ndjson
+
+# Keep reproducible pipeline summaries and portfolio deliverables.
+!artifacts/results/
+!artifacts/results/**
+!artifacts/figures/
+!artifacts/figures/**
