@@ -76,13 +76,25 @@ def test_api_rejects_invalid_contract() -> None:
 
 
 def test_api_reports_degraded_without_bundle(monkeypatch) -> None:
-    monkeypatch.setenv("MODEL_BUNDLE_PATH", "/does/not/exist.joblib")
+    missing_bundle = "/does/not/exist.joblib"
+    monkeypatch.setenv("MODEL_BUNDLE_PATH", missing_bundle)
     from manufacturing_ct.api import default_model_service
 
     default_model_service.cache_clear()
     client = TestClient(create_app())
+
     health = client.get("/health")
-    assert health.json()["status"] == "degraded"
+    assert health.status_code == 200
+    assert health.json() == {
+        "status": "degraded",
+        "model_ready": False,
+        "detail": "Model service is unavailable.",
+    }
+    assert missing_bundle not in health.text
+
     response = client.post("/v1/recommendations", json=payload())
     assert response.status_code == 503
+    assert response.json() == {"detail": "Model service is unavailable."}
+    assert missing_bundle not in response.text
+
     default_model_service.cache_clear()
