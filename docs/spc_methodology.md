@@ -11,6 +11,13 @@
 | Fixed lot defective count | np not selected | Generated lot size varies |
 | Fixed opportunity defect count | c not selected | Generated units/opportunities vary |
 
+## Attribute-chart input contract
+
+The p and u chart implementations reject empty or unequal-length inputs, missing or non-finite
+values, non-positive exposure denominators, negative defect counts and missing baseline rows.
+The p chart additionally rejects defective-unit counts above the inspected lot size so invalid
+binomial proportions cannot enter control-limit calculations.
+
 ## Baseline and forward use
 
 Control parameters are fit only on observations before `validation_start`.
@@ -49,4 +56,3 @@ reviewed before operational use.
 The chart taxonomy and capability distinction follow the
 [NIST/SEMATECH handbook](https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc3.htm)
 and its [process capability section](https://www.itl.nist.gov/div898/handbook/pmc/section1/pmc16.htm).
-

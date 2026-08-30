@@ -92,3 +92,23 @@ def test_spc_rejects_invalid_inputs() -> None:
         u_chart(pd.Series([1]), pd.Series([0]), pd.Series([True]))
     with pytest.raises(ValueError):
         process_capability(pd.Series([1.0]), 0.0, 2.0, 0.1)
+
+
+def test_attribute_charts_reject_invalid_count_inputs() -> None:
+    baseline = pd.Series([True, True])
+    with pytest.raises(ValueError, match="non-negative"):
+        p_chart(pd.Series([-1, 1]), pd.Series([100, 100]), baseline)
+    with pytest.raises(ValueError, match="cannot exceed"):
+        p_chart(pd.Series([101, 1]), pd.Series([100, 100]), baseline)
+    with pytest.raises(ValueError, match="non-negative"):
+        u_chart(pd.Series([-1, 1]), pd.Series([100, 100]), baseline)
+    with pytest.raises(ValueError, match="equal lengths"):
+        p_chart(pd.Series([1]), pd.Series([100, 100]), baseline)
+    with pytest.raises(ValueError, match="finite"):
+        p_chart(pd.Series([np.nan, 1]), pd.Series([100, 100]), baseline)
+    with pytest.raises(ValueError, match="finite"):
+        p_chart(pd.Series([1, 1]), pd.Series([np.nan, 100]), baseline)
+    with pytest.raises(ValueError, match="baseline labels"):
+        u_chart(pd.Series([1, 1]), pd.Series([100, 100]), pd.Series([True, None]))
+    with pytest.raises(ValueError, match="baseline observation"):
+        u_chart(pd.Series([1, 1]), pd.Series([100, 100]), pd.Series([False, False]))

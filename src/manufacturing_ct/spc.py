@@ -168,11 +168,14 @@ def p_chart(
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Create a p chart with limits that vary by inspected lot size."""
 
-    defects = pd.Series(defectives, dtype=float).reset_index(drop=True)
-    n = pd.Series(sample_size, dtype=float).reset_index(drop=True)
-    baseline = pd.Series(baseline_mask).reset_index(drop=True).astype(bool)
-    if (n <= 0).any():
-        raise ValueError("p chart sample sizes must be positive")
+    defects, n, baseline = _attribute_chart_inputs(
+        defectives,
+        sample_size,
+        baseline_mask,
+        chart_name="p chart",
+        denominator_name="sample sizes",
+        bounded_counts=True,
+    )
     pbar = float(defects.loc[baseline].sum() / n.loc[baseline].sum())
     standard_error = np.sqrt(pbar * (1 - pbar) / n)
     lcl = np.maximum(0.0, pbar - 3 * standard_error)
@@ -204,11 +207,14 @@ def u_chart(
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Create a u chart for defect counts with variable units of opportunity."""
 
-    counts = pd.Series(defects, dtype=float).reset_index(drop=True)
-    n = pd.Series(units, dtype=float).reset_index(drop=True)
-    baseline = pd.Series(baseline_mask).reset_index(drop=True).astype(bool)
-    if (n <= 0).any():
-        raise ValueError("u chart unit counts must be positive")
+    counts, n, baseline = _attribute_chart_inputs(
+        defects,
+        units,
+        baseline_mask,
+        chart_name="u chart",
+        denominator_name="unit counts",
+        bounded_counts=False,
+    )
     ubar = float(counts.loc[baseline].sum() / n.loc[baseline].sum())
     standard_error = np.sqrt(ubar / n)
     lcl = np.maximum(0.0, ubar - 3 * standard_error)
@@ -233,6 +239,40 @@ def u_chart(
         "variable_units": bool(n.nunique() > 1),
         "control_limits_are_specification_limits": False,
     }
+
+
+def _attribute_chart_inputs(
+    counts: pd.Series,
+    denominators: pd.Series,
+    baseline_mask: pd.Series,
+    *,
+    chart_name: str,
+    denominator_name: str,
+    bounded_counts: bool,
+) -> tuple[pd.Series, pd.Series, pd.Series]:
+    """Validate and normalize attribute-chart counts, exposure and baseline rows."""
+
+    numerator = pd.Series(counts, dtype=float).reset_index(drop=True)
+    denominator = pd.Series(denominators, dtype=float).reset_index(drop=True)
+    baseline_raw = pd.Series(baseline_mask).reset_index(drop=True)
+    if not (len(numerator) == len(denominator) == len(baseline_raw)) or numerator.empty:
+        raise ValueError(f"{chart_name} inputs must be non-empty and have equal lengths")
+    if (
+        not np.isfinite(numerator).all()
+        or not np.isfinite(denominator).all()
+        or baseline_raw.isna().any()
+    ):
+        raise ValueError(f"{chart_name} inputs must be finite and baseline labels must be present")
+    if (denominator <= 0).any():
+        raise ValueError(f"{chart_name} {denominator_name} must be positive")
+    if (numerator < 0).any():
+        raise ValueError(f"{chart_name} defect counts must be non-negative")
+    if bounded_counts and (numerator > denominator).any():
+        raise ValueError("p chart defectives cannot exceed the inspected sample size")
+    baseline = baseline_raw.astype(bool)
+    if not baseline.any():
+        raise ValueError(f"{chart_name} requires at least one baseline observation")
+    return numerator, denominator, baseline
 
 
 def process_capability(
