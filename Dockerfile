@@ -18,7 +18,8 @@ COPY src ./src
 COPY artifacts/model ./artifacts/model
 
 RUN python -m pip install --upgrade pip setuptools \
-    && python -m pip install .
+    && python -m pip install . \
+    && python -m pip uninstall --yes pip setuptools
 
 USER 10001:10001
 
