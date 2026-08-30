@@ -7,7 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-RUN groupadd --gid 10001 appgroup \
+RUN apt-get update \
+    && apt-get upgrade --yes \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --gid 10001 appgroup \
     && useradd --uid 10001 --gid appgroup --no-create-home --shell /usr/sbin/nologin appuser
 
 COPY pyproject.toml README.md ./
@@ -25,4 +28,3 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"
 
 CMD ["uvicorn", "manufacturing_ct.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
-
