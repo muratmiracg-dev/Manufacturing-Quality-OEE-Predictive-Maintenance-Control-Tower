@@ -17,7 +17,7 @@ COPY pyproject.toml README.md ./
 COPY src ./src
 COPY artifacts/model ./artifacts/model
 
-RUN python -m pip install --upgrade pip \
+RUN python -m pip install --upgrade pip setuptools \
     && python -m pip install .
 
 USER 10001:10001
