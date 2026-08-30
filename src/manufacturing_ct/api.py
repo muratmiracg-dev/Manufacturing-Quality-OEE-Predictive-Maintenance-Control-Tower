@@ -153,8 +153,12 @@ def create_app(predictor: Predictor | None = None) -> FastAPI:
     def health() -> dict[str, Any]:
         try:
             service = resolve_predictor()
-        except (FileNotFoundError, KeyError, ValueError) as exc:
-            return {"status": "degraded", "model_ready": False, "detail": str(exc)}
+        except (FileNotFoundError, KeyError, ValueError):
+            return {
+                "status": "degraded",
+                "model_ready": False,
+                "detail": "Model service is unavailable.",
+            }
         return {
             "status": "ok",
             "model_ready": True,
@@ -190,7 +194,10 @@ def create_app(predictor: Predictor | None = None) -> FastAPI:
             }
         except (FileNotFoundError, KeyError, ValueError) as exc:
             REQUESTS.labels(outcome="error").inc()
-            raise HTTPException(status_code=503, detail=str(exc)) from exc
+            raise HTTPException(
+                status_code=503,
+                detail="Model service is unavailable.",
+            ) from exc
         finally:
             LATENCY.observe(time.perf_counter() - started)
 
