@@ -54,6 +54,14 @@ jobs:
       - uses: actions/checkout@v7
       - name: Build local image
         run: docker build --tag manufacturing-control-tower:${{ github.sha }} .
+      - name: Report image vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: manufacturing-control-tower:${{ github.sha }}
+          format: table
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "0"
       - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: manufacturing-control-tower:${{ github.sha }}
@@ -68,4 +76,3 @@ jobs:
         with:
           sarif_file: trivy-image.sarif
           category: trivy-image
-
