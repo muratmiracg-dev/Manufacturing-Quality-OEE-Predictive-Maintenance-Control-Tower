@@ -12,12 +12,12 @@ license = { text = "MIT" }
 authors = [{ name = "Murat Mirac Gedik" }]
 dependencies = [
   "fastapi==0.141.1",
-  "joblib==1.5.3",
+  "joblib==1.6.0",
   "matplotlib==3.11.1",
   "numpy==2.4.6",
   "pandas==3.0.5",
   "prometheus-client==0.26.0",
-  "pydantic==2.13.4",
+  "pydantic==2.13.5",
   "PyYAML==6.0.3",
   "reportlab==5.0.1",
   "scikit-learn==1.9.0",
@@ -33,9 +33,9 @@ dev = [
   "pip-audit==2.10.1",
   "pytest==9.1.1",
   "pytest-cov==7.1.0",
-  "ruff==0.16.4",
+  "ruff==0.16.6",
 ]
-postgres = ["psycopg[binary]==3.3.4"]
+postgres = ["psycopg[binary]==3.3.5"]
 
 [project.scripts]
 manufacturing-pipeline = "manufacturing_ct.pipeline:main"
