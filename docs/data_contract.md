@@ -39,6 +39,15 @@
 | `failure_within_24h` | integer | 0/1 | future three shifts |
 | `next_failure_hours` | float/null | 8, 16, 24 | audit only |
 
+## Maintenance decision inputs
+
+The recommendation policy fails closed instead of clipping or coercing invalid
+decision inputs. Failure probability must be finite and in `[0, 1]`; the selected
+model threshold must be finite and in `(0, 1)`. Criticality must be an integer from
+1 through 5, and failure and maintenance costs must be finite and strictly positive.
+Policy effectiveness must be in `(0, 1]`, the urgent multiplier must be at least 1,
+and the watch multiplier must be in `(0, 1)`.
+
 ## OEE definitions
 
 ```text
@@ -60,4 +69,3 @@ Breaking changes require:
 3. regenerated metric artifacts;
 4. revalidated model and thresholds;
 5. a major or minor semantic version increment.
-
