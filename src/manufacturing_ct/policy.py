@@ -19,6 +19,56 @@ class PolicyConfig:
         return asdict(self)
 
 
+def _validate_policy_inputs(
+    failure_probability: float,
+    model_threshold: float,
+    criticality: int,
+    failure_cost: float,
+    maintenance_cost: float,
+    policy: PolicyConfig,
+) -> tuple[float, float, int, float, float]:
+    """Return normalized policy inputs after fail-closed domain validation."""
+
+    try:
+        values = np.asarray(
+            [
+                failure_probability,
+                model_threshold,
+                criticality,
+                failure_cost,
+                maintenance_cost,
+                policy.intervention_effectiveness,
+                policy.urgent_multiplier,
+                policy.watch_multiplier,
+            ],
+            dtype=float,
+        )
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Maintenance policy inputs must be numeric") from exc
+    if not np.isfinite(values).all():
+        raise ValueError("Maintenance policy inputs must be finite")
+
+    probability, threshold, criticality_value, failure, maintenance = values[:5]
+    if not 0.0 <= probability <= 1.0:
+        raise ValueError("Failure probability must be between zero and one")
+    if not 0.0 < threshold < 1.0:
+        raise ValueError("Model threshold must be strictly between zero and one")
+    if isinstance(criticality, (bool, np.bool_)) or not criticality_value.is_integer():
+        raise ValueError("Criticality must be an integer between one and five")
+    criticality_integer = int(criticality_value)
+    if not 1 <= criticality_integer <= 5:
+        raise ValueError("Criticality must be an integer between one and five")
+    if failure <= 0.0 or maintenance <= 0.0:
+        raise ValueError("Failure and maintenance costs must be positive")
+    if not 0.0 < policy.intervention_effectiveness <= 1.0:
+        raise ValueError("Intervention effectiveness must be in (0, 1]")
+    if policy.urgent_multiplier < 1.0:
+        raise ValueError("Urgent multiplier must be at least one")
+    if not 0.0 < policy.watch_multiplier < 1.0:
+        raise ValueError("Watch multiplier must be in (0, 1)")
+    return probability, threshold, criticality_integer, failure, maintenance
+
+
 def maintenance_recommendation(
     failure_probability: float,
     model_threshold: float,
@@ -31,24 +81,31 @@ def maintenance_recommendation(
     """Return a recommendation only; never create or execute maintenance work."""
 
     policy = config or PolicyConfig()
-    probability = float(np.clip(failure_probability, 0.0, 1.0))
-    criticality_factor = 0.75 + 0.10 * int(np.clip(criticality, 1, 5))
+    probability, threshold, criticality, failure_cost, maintenance_cost = _validate_policy_inputs(
+        failure_probability,
+        model_threshold,
+        criticality,
+        failure_cost,
+        maintenance_cost,
+        policy,
+    )
+    criticality_factor = 0.75 + 0.10 * criticality
     expected_failure_cost = probability * failure_cost * criticality_factor
     expected_avoided_loss = expected_failure_cost * policy.intervention_effectiveness
     net_benefit = expected_avoided_loss - maintenance_cost
     risk_cost_ratio = expected_avoided_loss / max(maintenance_cost, 1.0)
 
     if (
-        probability >= min(model_threshold * policy.urgent_multiplier, 0.95)
+        probability >= min(threshold * policy.urgent_multiplier, 0.95)
         and criticality >= 4
         and net_benefit > 0
     ):
         priority = "P1"
         action = "Inspect within 8 hours; maintenance planner approval required"
-    elif probability >= model_threshold and net_benefit > 0:
+    elif probability >= threshold and net_benefit > 0:
         priority = "P2"
         action = "Schedule diagnostic inspection within 24 hours"
-    elif probability >= model_threshold * policy.watch_multiplier or risk_cost_ratio >= 0.75:
+    elif probability >= threshold * policy.watch_multiplier or risk_cost_ratio >= 0.75:
         priority = "P3"
         action = "Increase monitoring and review at next planning meeting"
     else:
@@ -59,8 +116,8 @@ def maintenance_recommendation(
         "priority": priority,
         "recommended_action": action,
         "failure_probability": probability,
-        "model_threshold": float(model_threshold),
-        "criticality": int(criticality),
+        "model_threshold": threshold,
+        "criticality": criticality,
         "estimated_failure_cost": float(failure_cost),
         "estimated_maintenance_cost": float(maintenance_cost),
         "expected_failure_cost": float(expected_failure_cost),
