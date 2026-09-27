@@ -53,7 +53,7 @@ def _validate_policy_inputs(
         raise ValueError("Failure probability must be between zero and one")
     if not 0.0 < threshold < 1.0:
         raise ValueError("Model threshold must be strictly between zero and one")
-    if isinstance(criticality, (bool, np.bool_)) or not criticality_value.is_integer():
+    if isinstance(criticality, bool | np.bool_) or not criticality_value.is_integer():
         raise ValueError("Criticality must be an integer between one and five")
     criticality_integer = int(criticality_value)
     if not 1 <= criticality_integer <= 5:
