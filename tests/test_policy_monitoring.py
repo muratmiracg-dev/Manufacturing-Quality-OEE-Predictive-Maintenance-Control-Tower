@@ -31,6 +31,36 @@ def test_policy_priorities_and_human_boundary() -> None:
     assert PolicyConfig().to_dict()["intervention_effectiveness"] == pytest.approx(0.65)
 
 
+@pytest.mark.parametrize(
+    "invalid",
+    [
+        {"failure_probability": None},
+        {"failure_probability": float("nan")},
+        {"failure_probability": -0.01},
+        {"failure_probability": 1.01},
+        {"model_threshold": 0.0},
+        {"criticality": 2.5},
+        {"criticality": True},
+        {"failure_cost": -1.0},
+        {"maintenance_cost": float("inf")},
+        {"config": PolicyConfig(intervention_effectiveness=1.2)},
+        {"config": PolicyConfig(urgent_multiplier=0.9)},
+        {"config": PolicyConfig(watch_multiplier=1.0)},
+    ],
+)
+def test_policy_rejects_invalid_decision_inputs(invalid: dict[str, object]) -> None:
+    inputs: dict[str, object] = {
+        "failure_probability": 0.4,
+        "model_threshold": 0.3,
+        "criticality": 3,
+        "failure_cost": 30_000.0,
+        "maintenance_cost": 2_000.0,
+    }
+    inputs.update(invalid)
+    with pytest.raises(ValueError):
+        maintenance_recommendation(**inputs)
+
+
 def test_priority_table_keeps_latest_per_machine() -> None:
     predictions = pd.DataFrame(
         {
