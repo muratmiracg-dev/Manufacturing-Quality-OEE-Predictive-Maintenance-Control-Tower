@@ -16,10 +16,16 @@ def population_stability_index(
 ) -> float:
     """Calculate numeric PSI using reference quantile bins."""
 
+    if isinstance(bins, bool) or not isinstance(bins, int) or bins < 2:
+        raise ValueError("PSI bins must be an integer of at least two")
+    if isinstance(epsilon, bool) or not np.isfinite(epsilon) or not 0 < epsilon < 0.5:
+        raise ValueError("PSI epsilon must be finite and between zero and 0.5")
     ref = pd.Series(reference, dtype=float).dropna()
     cur = pd.Series(current, dtype=float).dropna()
     if ref.empty or cur.empty:
         raise ValueError("PSI requires non-empty reference and current samples")
+    if not np.isfinite(ref).all() or not np.isfinite(cur).all():
+        raise ValueError("PSI requires finite numeric observations")
     edges = np.unique(np.quantile(ref, np.linspace(0, 1, bins + 1)))
     if len(edges) < 3:
         return 0.0
@@ -34,8 +40,12 @@ def population_stability_index(
 def categorical_psi(reference: pd.Series, current: pd.Series, epsilon: float = 1e-6) -> float:
     """Calculate PSI across the union of categorical levels."""
 
+    if isinstance(epsilon, bool) or not np.isfinite(epsilon) or not 0 < epsilon < 0.5:
+        raise ValueError("PSI epsilon must be finite and between zero and 0.5")
     ref = pd.Series(reference).fillna("__MISSING__").astype(str)
     cur = pd.Series(current).fillna("__MISSING__").astype(str)
+    if ref.empty or cur.empty:
+        raise ValueError("PSI requires non-empty reference and current samples")
     categories = sorted(set(ref) | set(cur))
     ref_share = ref.value_counts(normalize=True).reindex(categories, fill_value=0).to_numpy()
     cur_share = cur.value_counts(normalize=True).reindex(categories, fill_value=0).to_numpy()
