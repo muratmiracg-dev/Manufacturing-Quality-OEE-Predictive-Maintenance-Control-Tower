@@ -69,3 +69,9 @@ Breaking changes require:
 3. regenerated metric artifacts;
 4. revalidated model and thresholds;
 5. a major or minor semantic version increment.
+# Drift-monitoring contract
+
+Numeric PSI accepts finite observations, at least two quantile bins, and a
+finite smoothing epsilon strictly between zero and 0.5. Categorical PSI uses
+the same epsilon bounds and rejects empty samples, preventing invalid
+monitoring parameters from producing misleading drift severities.

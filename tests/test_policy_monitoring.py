@@ -125,3 +125,20 @@ def test_drift_data_quality_and_alarm_metrics() -> None:
 def test_psi_rejects_empty_samples() -> None:
     with pytest.raises(ValueError):
         population_stability_index(pd.Series(dtype=float), pd.Series([1.0]))
+
+
+@pytest.mark.parametrize("bins", [True, 1, 2.5])
+def test_numeric_psi_rejects_invalid_bins(bins: object) -> None:
+    with pytest.raises(ValueError, match="bins"):
+        population_stability_index(pd.Series([1.0, 2.0]), pd.Series([1.5, 2.5]), bins=bins)
+
+
+@pytest.mark.parametrize("epsilon", [True, 0, -0.1, 0.5, float("nan"), float("inf")])
+def test_psi_rejects_invalid_epsilon(epsilon: object) -> None:
+    with pytest.raises(ValueError, match="epsilon"):
+        categorical_psi(pd.Series(["A"]), pd.Series(["B"]), epsilon=epsilon)
+
+
+def test_numeric_psi_rejects_non_finite_observations() -> None:
+    with pytest.raises(ValueError, match="finite numeric"):
+        population_stability_index(pd.Series([1.0, float("inf")]), pd.Series([1.0, 2.0]))
