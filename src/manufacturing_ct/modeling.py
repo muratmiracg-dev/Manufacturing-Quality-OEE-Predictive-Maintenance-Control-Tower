@@ -194,11 +194,19 @@ def expected_classification_cost(
 ) -> float:
     """Return mean asymmetric classification cost."""
 
-    false_negative = np.sum((y_true == 1) & (y_pred == 0))
-    false_positive = np.sum((y_true == 0) & (y_pred == 1))
+    truth = np.asarray(y_true)
+    predicted = np.asarray(y_pred)
+    if truth.ndim != 1 or predicted.shape != truth.shape or not truth.size:
+        raise ValueError("classification labels must be non-empty aligned vectors")
+    if not np.isin(truth, [0, 1]).all() or not np.isin(predicted, [0, 1]).all():
+        raise ValueError("classification labels must be binary")
+    costs = np.asarray([false_negative_cost, false_positive_cost], dtype=float)
+    if not np.isfinite(costs).all() or (costs < 0).any():
+        raise ValueError("classification costs must be finite and non-negative")
+    false_negative = np.sum((truth == 1) & (predicted == 0))
+    false_positive = np.sum((truth == 0) & (predicted == 1))
     return float(
-        (false_negative * false_negative_cost + false_positive * false_positive_cost)
-        / max(len(y_true), 1)
+        (false_negative * false_negative_cost + false_positive * false_positive_cost) / len(truth)
     )
 
 
