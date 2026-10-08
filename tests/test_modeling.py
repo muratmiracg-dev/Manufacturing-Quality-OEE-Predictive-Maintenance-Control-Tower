@@ -105,6 +105,4 @@ def test_modeling_rejects_bad_partitions(modeling_frame: pd.DataFrame) -> None:
 )
 def test_expected_cost_rejects_invalid_inputs(truth, predicted, fn_cost, fp_cost):
     with pytest.raises(ValueError):
-        expected_classification_cost(
-            np.asarray(truth), np.asarray(predicted), fn_cost, fp_cost
-        )
+        expected_classification_cost(np.asarray(truth), np.asarray(predicted), fn_cost, fp_cost)

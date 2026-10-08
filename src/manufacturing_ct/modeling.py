@@ -206,8 +206,7 @@ def expected_classification_cost(
     false_negative = np.sum((truth == 1) & (predicted == 0))
     false_positive = np.sum((truth == 0) & (predicted == 1))
     return float(
-        (false_negative * false_negative_cost + false_positive * false_positive_cost)
-        / len(truth)
+        (false_negative * false_negative_cost + false_positive * false_positive_cost) / len(truth)
     )
 
 
