@@ -90,3 +90,21 @@ def test_modeling_rejects_bad_partitions(modeling_frame: pd.DataFrame) -> None:
         fit_calibrated_candidate(
             "logistic_regression", one_class.iloc[:60], one_class.iloc[60:], seed=1
         )
+
+
+@pytest.mark.parametrize(
+    "truth,predicted,fn_cost,fp_cost",
+    [
+        ([], [], 10, 2),
+        ([0, 1], [0], 10, 2),
+        ([0, 2], [0, 1], 10, 2),
+        ([0, 1], [0, 2], 10, 2),
+        ([0, 1], [0, 1], -1, 2),
+        ([0, 1], [0, 1], 10, np.inf),
+    ],
+)
+def test_expected_cost_rejects_invalid_inputs(truth, predicted, fn_cost, fp_cost):
+    with pytest.raises(ValueError):
+        expected_classification_cost(
+            np.asarray(truth), np.asarray(predicted), fn_cost, fp_cost
+        )
