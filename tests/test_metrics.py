@@ -76,3 +76,7 @@ def test_empty_pareto_and_zero_failure_reliability(production: pd.DataFrame) -> 
     assert reliability["failure_count"] == 0
     assert np.isnan(reliability["mtbf_hours"])
     assert reliability["mttr_hours"] == 0
+    kpis = executive_kpis(production, empty, machines)
+    assert kpis["failure_count"] == 0
+    assert kpis["mtbf_hours"] is None
+    assert kpis["mttr_hours"] == 0.0
