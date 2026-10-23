@@ -134,12 +134,15 @@ def reliability_metrics(
 
 def executive_kpis(
     production: pd.DataFrame, downtime: pd.DataFrame, machines: pd.DataFrame
-) -> dict[str, float | int]:
+) -> dict[str, float | int | None]:
     """Return reconciled portfolio-level KPI values."""
 
     enriched = add_oee_components(production)
     plant = aggregate_oee(enriched.assign(plant="Plant"), ["plant"]).iloc[0]
     reliability = reliability_metrics(enriched, downtime, machines)
+    failure_count = int(reliability["failure_count"].sum())
+    operating_hours = float(reliability["operating_hours"].sum())
+    repair_hours = float(reliability["total_repair_hours"].sum())
     return {
         "availability": float(plant["availability"]),
         "performance": float(plant["performance"]),
@@ -150,12 +153,8 @@ def executive_kpis(
         "rework_rate": float(plant["rework_rate"]),
         "copq": float(plant["copq"]),
         "unplanned_downtime_hours": float(plant["unplanned_downtime_min"] / 60.0),
-        "failure_count": int(reliability["failure_count"].sum()),
-        "mtbf_hours": float(
-            reliability["operating_hours"].sum() / max(reliability["failure_count"].sum(), 1)
-        ),
-        "mttr_hours": float(
-            reliability["total_repair_hours"].sum() / max(reliability["failure_count"].sum(), 1)
-        ),
+        "failure_count": failure_count,
+        "mtbf_hours": operating_hours / failure_count if failure_count else None,
+        "mttr_hours": repair_hours / failure_count if failure_count else 0.0,
         "total_units": int(plant["total_units"]),
     }
