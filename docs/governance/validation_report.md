@@ -12,9 +12,9 @@ period was evaluated once after candidate and threshold decisions.
 ## Champion/challenger outcome
 
 The selected champion is `random_forest` and the retained challenger
-is `logistic_regression`. OOT PR-AUC is 0.3887, ROC-AUC is
-0.7489, Brier score is 0.1137, precision is
-0.2630, and recall is 0.7351.
+is `logistic_regression`. OOT PR-AUC is 0.3866, ROC-AUC is
+0.7487, Brier score is 0.1138, precision is
+0.2595, and recall is 0.7351.
 
 ## Process capability snapshot
 

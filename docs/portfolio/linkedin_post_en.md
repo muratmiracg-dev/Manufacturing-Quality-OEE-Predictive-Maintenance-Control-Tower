@@ -16,10 +16,10 @@ Key results from the actual pipeline:
 ✅ 85.27% plant OEE: 98.36% availability, 90.99% performance, 95.27% quality  
 ✅ X-bar/R, I-MR, p and u SPC charts with documented alarm rules  
 ✅ Cp, Cpk, Pp and Ppk with control/specification limits kept separate  
-✅ Calibrated Random Forest champion: 0.7489 OOT ROC-AUC and 0.3887 PR-AUC  
+✅ Calibrated Random Forest champion: 0.7487 OOT ROC-AUC and 0.3866 PR-AUC  
 ✅ 73.51% OOT recall at a validation-selected, capacity-constrained threshold  
 ✅ Global and local SHAP explanations converted into maintenance reason codes  
-✅ 35 tests and 95.30% coverage  
+✅ 69 tests and 95.06% coverage  
 
 The recommendation policy combines risk, machine criticality, estimated
 failure cost and maintenance cost. It remains deliberately human-in-the-loop:

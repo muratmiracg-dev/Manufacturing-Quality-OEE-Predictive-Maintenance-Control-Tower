@@ -13,8 +13,8 @@ clear separation between control limits and engineering specification limits.
 A leakage-controlled 24-hour failure prediction pipeline compares calibrated
 Random Forest and Logistic Regression candidates using chronological
 development, validation and out-of-time test periods. The selected champion
-achieved 0.7489 ROC-AUC and 0.3887 PR-AUC on OOT data, versus a 0.1543 no-skill
-PR baseline, with 0.1137 Brier score and 73.51% recall at the
+achieved 0.7487 ROC-AUC and 0.3866 PR-AUC on OOT data, versus a 0.1543 no-skill
+PR baseline, with 0.1138 Brier score and 73.51% recall at the
 capacity-constrained threshold.
 
 Global/local SHAP explanations feed traceable maintenance reason codes. A
@@ -24,7 +24,7 @@ keeping human approval mandatory.
 
 Built with Python, scikit-learn, SHAP, FastAPI, PostgreSQL, Power BI Project,
 Excel, Docker, Kubernetes, Prometheus, Grafana and GitHub Actions. The project
-includes 35 tests with 95.30% coverage, CodeQL, pip-audit, Trivy, Dependabot,
+includes 69 tests with 95.06% coverage, CodeQL, pip-audit, Trivy, Dependabot,
 model governance, threat modeling, incident response and a detailed reference
 crosswalk without claiming standards compliance.
 

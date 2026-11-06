@@ -15,13 +15,13 @@ yeniden üretilebiliyor.
 kontrol limitleri spesifikasyonlardan ayrılıyor; X-bar/R, I-MR, p ve u grafikleri
 veri yapısına göre seçiliyor. Kestirimci bakımda model-fit, calibration,
 validation ve out-of-time dönemlerini kronolojik ayırdım ve 24 saatlik purge gap
-kullandım. Random Forest champion OOT verisinde 0,7489 ROC-AUC ve 0,3887 PR-AUC
-üretti. Trade-off'u gizlemedim: %73,51 recall düzeyinde OOT alarm oranı %43,11
+kullandım. Random Forest champion OOT verisinde 0,7487 ROC-AUC ve 0,3866 PR-AUC
+üretti. Trade-off'u gizlemedim: %73,51 recall düzeyinde OOT alarm oranı %43,71
 oldu; bu nedenle inceleme kapasitesi monitoring runbook'ta operasyonel kısıt.
 
 Son olarak SHAP nedenleri maliyet-risk politikasına giriyor; ancak servis sadece
 öneri veriyor ve insan onayını zorunlu tutuyor. Platform FastAPI, PostgreSQL,
-Power BI, Excel, container, monitoring ve %95,30 kapsamlı 35 testi içeriyor.
+Power BI, Excel, container, monitoring ve %95,06 kapsamlı 69 testi içeriyor.
 
 ## Neden accuracy optimize edilmedi?
 

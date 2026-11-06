@@ -22,14 +22,14 @@ maintenance.
 
 | Metric | Result |
 |---|---:|
-| PR-AUC | 0.3887 |
-| ROC-AUC | 0.7489 |
-| Brier score | 0.1137 |
-| ECE (10 bins) | 0.0164 |
-| Precision | 0.2630 |
+| PR-AUC | 0.3866 |
+| ROC-AUC | 0.7487 |
+| Brier score | 0.1138 |
+| ECE (10 bins) | 0.0161 |
+| Precision | 0.2595 |
 | Recall | 0.7351 |
-| F1 | 0.3875 |
-| Selected threshold | 0.1478 |
+| F1 | 0.3835 |
+| Selected threshold | 0.1454 |
 
 ## Explainability
 

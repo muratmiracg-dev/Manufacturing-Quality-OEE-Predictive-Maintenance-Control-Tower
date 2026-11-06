@@ -23,16 +23,22 @@ deterministik ve tamamen sentetiktir.
 | Sentetik Cost of Poor Quality | 12.936.905,5 maliyet birimi |
 | MTBF / MTTR | 145,96 saat / 1,73 saat |
 | Champion / Challenger | Random Forest / Logistic Regression |
-| OOT ROC-AUC / PR-AUC | 0,7489 / 0,3887 |
-| OOT Brier / ECE | 0,1137 / 0,0164 |
-| OOT precision / recall | %26,30 / %73,51 |
-| Seçilen olasılık eşiği | 0,1478 |
-| OOT alarm oranı / medyan ön süre | %43,11 / 16 saat |
-| Test / kapsam | 35 başarılı / **%95,30** |
+| OOT ROC-AUC / PR-AUC | 0,7487 / 0,3866 |
+| OOT Brier / ECE | 0,1138 / 0,0161 |
+| OOT precision / recall | %25,95 / %73,51 |
+| Seçilen olasılık eşiği | 0,1454 |
+| OOT alarm oranı / medyan ön süre | %43,71 / 16 saat |
+| Test / kapsam | 69 başarılı / **%95,06** |
 
-OOT pozitif oranı %15,43'tür. Bu nedenle 0,3887 PR-AUC, no-skill tabanının
-yaklaşık 2,52 katıdır. OOT alarm oranının validation dönemindeki %40 kapasite
+OOT pozitif oranı %15,43'tür. Bu nedenle 0,3866 PR-AUC, no-skill tabanının
+yaklaşık 2,51 katıdır. OOT alarm oranının validation dönemindeki %40 kapasite
 sınırını aşması gizlenmemiş, izleme bulgusu olarak raporlanmıştır.
+
+CI her pull request'te pipeline'ı yeniden çalıştırır; yeniden üretilen CSV/JSON çıktıları
+kayıtlı dosyalardan saparsa başarısız olur. `deliverables/` altındaki Excel, sunum ve PDF
+pipeline dışında üretilmiş statik kopyalardır ve bir sonraki yeniden üretime kadar eski model
+metriklerini (OOT PR-AUC 0,3887) gösterir; esas kaynak `artifacts/` ve `docs/governance/`
+çıktılarıdır.
 
 ## Kapsam
 
