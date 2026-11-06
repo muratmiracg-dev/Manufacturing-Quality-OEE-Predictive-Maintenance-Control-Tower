@@ -15,10 +15,10 @@ Gerçek pipeline çıktılarından öne çıkanlar:
 ✅ %85,27 OEE: %98,36 availability, %90,99 performance, %95,27 quality  
 ✅ Dokümante alarm kurallarıyla X-bar/R, I-MR, p ve u kontrol grafikleri  
 ✅ Kontrol ve spesifikasyon limitleri ayrılarak Cp, Cpk, Pp ve Ppk  
-✅ Kalibre Random Forest champion: 0,7489 OOT ROC-AUC, 0,3887 PR-AUC  
+✅ Kalibre Random Forest champion: 0,7487 OOT ROC-AUC, 0,3866 PR-AUC  
 ✅ Kapasite kısıtlı threshold'da %73,51 OOT recall  
 ✅ Bakım neden kodlarına dönüştürülen global ve lokal SHAP açıklamaları  
-✅ 35 test ve %95,30 test kapsamı  
+✅ 69 test ve %95,06 test kapsamı  
 
 Karar politikası risk, makine kritiklik seviyesi, tahmini arıza maliyeti ve
 bakım maliyetini birleştiriyor. Sistem bilinçli biçimde human-in-the-loop:

@@ -16,7 +16,8 @@
     "human_approval_required": true,
     "recommendation_counts": {
       "MONITOR": 7,
-      "P1": 5
+      "P1": 4,
+      "P2": 1
     }
   },
   "executive_kpis": {
@@ -41,52 +42,52 @@
     "top_global_drivers": [
       {
         "base_feature": "tool_wear_pct",
-        "mean_absolute_shap": 0.049344353781791604,
+        "mean_absolute_shap": 0.04914124686578885,
         "reason_code": "TOOL_WEAR_ELEVATED"
       },
       {
         "base_feature": "lubrication_index",
-        "mean_absolute_shap": 0.038840114687937695,
+        "mean_absolute_shap": 0.03902276957188515,
         "reason_code": "LOW_LUBRICATION_INDEX"
       },
       {
         "base_feature": "hours_since_maintenance",
-        "mean_absolute_shap": 0.03654667579944734,
+        "mean_absolute_shap": 0.036689468029712555,
         "reason_code": "MAINTENANCE_INTERVAL_EXCEEDED"
       },
       {
         "base_feature": "temperature_c",
-        "mean_absolute_shap": 0.030743024754742814,
+        "mean_absolute_shap": 0.030043426814224464,
         "reason_code": "THERMAL_STRESS"
       },
       {
         "base_feature": "vibration_rolling_3",
-        "mean_absolute_shap": 0.023821354875954152,
+        "mean_absolute_shap": 0.023910549040699364,
         "reason_code": "SUSTAINED_VIBRATION"
       },
       {
         "base_feature": "pressure_bar",
-        "mean_absolute_shap": 0.020951853400612955,
+        "mean_absolute_shap": 0.021425600164718613,
         "reason_code": "PRESSURE_DEVIATION"
       },
       {
         "base_feature": "vibration_rms",
-        "mean_absolute_shap": 0.019802522591177964,
+        "mean_absolute_shap": 0.01988989108014217,
         "reason_code": "HIGH_VIBRATION_PATTERN"
       },
       {
         "base_feature": "downtime_last_7d_min",
-        "mean_absolute_shap": 0.016439816521723678,
+        "mean_absolute_shap": 0.016552522173568545,
         "reason_code": "RECENT_DOWNTIME_BURDEN"
       },
       {
         "base_feature": "machine_id",
-        "mean_absolute_shap": 0.009683560726933587,
+        "mean_absolute_shap": 0.010102273862569934,
         "reason_code": "MACHINE_BASELINE_EFFECT"
       },
       {
         "base_feature": "defect_rate_lag_1",
-        "mean_absolute_shap": 0.009294380631756596,
+        "mean_absolute_shap": 0.0097349268156339,
         "reason_code": "MODEL_DRIVER_DEFECT_RATE_LAG_1"
       }
     ],
@@ -129,26 +130,26 @@
         }
       },
       "random_forest": {
-        "selection_score": 0.4056531129082411,
+        "selection_score": 0.4058781619492102,
         "validation_at_0_5": {
           "alert_rate": 0.019350811485642945,
-          "brier_score": 0.10993689164565518,
-          "ece_10_bin": 0.02526271625333785,
-          "expected_cost_per_observation": 1112.4063670411986,
-          "f1": 0.12939001848428835,
-          "false_negative": 444,
-          "false_positive": 27,
-          "log_loss": 0.3632581778564586,
+          "brier_score": 0.10983260772972504,
+          "ece_10_bin": 0.026252794894783646,
+          "expected_cost_per_observation": 1120.318352059925,
+          "f1": 0.11829944547134935,
+          "false_negative": 447,
+          "false_positive": 30,
+          "log_loss": 0.36305476904504697,
           "observations": 3204,
           "positive_rate": 0.14950062421972535,
-          "pr_auc": 0.3767613880770419,
-          "precision": 0.5645161290322581,
-          "recall": 0.07306889352818371,
-          "roc_auc": 0.7645691520943861,
-          "specificity": 0.9900917431192661,
+          "pr_auc": 0.3771255576068503,
+          "precision": 0.5161290322580645,
+          "recall": 0.06680584551148225,
+          "roc_auc": 0.7643676619869375,
+          "specificity": 0.9889908256880734,
           "threshold": 0.5,
-          "true_negative": 2698,
-          "true_positive": 35
+          "true_negative": 2695,
+          "true_positive": 32
         }
       }
     },
@@ -163,42 +164,42 @@
     },
     "oot_confidence_intervals": {
       "brier_score": {
-        "lower_95": 0.10670107243538746,
-        "median": 0.11350927517825946,
+        "lower_95": 0.10676310824106601,
+        "median": 0.11353837723869967,
         "resamples": 250,
-        "upper_95": 0.12035151562460776
+        "upper_95": 0.12035764450487187
       },
       "pr_auc": {
-        "lower_95": 0.35974655601483024,
-        "median": 0.3908450259357941,
+        "lower_95": 0.3572463411809771,
+        "median": 0.38894322809819765,
         "resamples": 250,
-        "upper_95": 0.42585739208750567
+        "upper_95": 0.4230372895640488
       },
       "roc_auc": {
-        "lower_95": 0.7288546443841233,
-        "median": 0.7486303555533753,
+        "lower_95": 0.7291677321646335,
+        "median": 0.748385557645523,
         "resamples": 250,
-        "upper_95": 0.7665264482124614
+        "upper_95": 0.7669008080789481
       }
     },
     "oot_metrics": {
-      "alert_rate": 0.43112947658402206,
-      "brier_score": 0.11374825814485791,
-      "ece_10_bin": 0.016351462974802753,
-      "expected_cost_per_observation": 469.88062442607895,
-      "f1": 0.38745098039215686,
+      "alert_rate": 0.43709825528007346,
+      "brier_score": 0.11381056075462312,
+      "ece_10_bin": 0.01610040472056083,
+      "expected_cost_per_observation": 472.5665748393021,
+      "f1": 0.38354037267080743,
       "false_negative": 178,
-      "false_positive": 1384,
-      "log_loss": 0.37492691749627066,
+      "false_positive": 1410,
+      "log_loss": 0.3751096666302662,
       "observations": 4356,
       "positive_rate": 0.15426997245179064,
-      "pr_auc": 0.38865446252537994,
-      "precision": 0.2630457933972311,
+      "pr_auc": 0.38656286380234584,
+      "precision": 0.25945378151260506,
       "recall": 0.7351190476190477,
-      "roc_auc": 0.7489429030298329,
-      "specificity": 0.6243213897937026,
-      "threshold": 0.1477606755877041,
-      "true_negative": 2300,
+      "roc_auc": 0.7486589369732692,
+      "specificity": 0.6172638436482085,
+      "threshold": 0.14537213698215762,
+      "true_negative": 2274,
       "true_positive": 494
     },
     "partitions": {
@@ -228,41 +229,41 @@
       }
     },
     "threshold": {
-      "alert_rate": 0.3951310861423221,
-      "expected_cost_per_observation": 416.4637952559301,
-      "f1": 0.4160458452722063,
-      "precision": 0.28672985781990523,
-      "recall": 0.7578288100208769,
-      "threshold": 0.1477606755877041
+      "alert_rate": 0.3976279650436954,
+      "expected_cost_per_observation": 425.49937578027465,
+      "f1": 0.4107244723331432,
+      "precision": 0.282574568288854,
+      "recall": 0.7515657620041754,
+      "threshold": 0.14537213698215762
     },
     "validation_metrics": {
-      "alert_rate": 0.3951310861423221,
-      "brier_score": 0.10993689164565518,
-      "ece_10_bin": 0.02526271625333785,
-      "expected_cost_per_observation": 416.4637952559301,
-      "f1": 0.4160458452722063,
-      "false_negative": 116,
-      "false_positive": 903,
-      "log_loss": 0.3632581778564586,
+      "alert_rate": 0.3976279650436954,
+      "brier_score": 0.10983260772972504,
+      "ece_10_bin": 0.026252794894783646,
+      "expected_cost_per_observation": 425.49937578027465,
+      "f1": 0.4107244723331432,
+      "false_negative": 119,
+      "false_positive": 914,
+      "log_loss": 0.36305476904504697,
       "observations": 3204,
       "positive_rate": 0.14950062421972535,
-      "pr_auc": 0.3767613880770419,
-      "precision": 0.28672985781990523,
-      "recall": 0.7578288100208769,
-      "roc_auc": 0.7645691520943861,
-      "specificity": 0.6686238532110091,
-      "threshold": 0.1477606755877041,
-      "true_negative": 1822,
-      "true_positive": 363
+      "pr_auc": 0.3771255576068503,
+      "precision": 0.282574568288854,
+      "recall": 0.7515657620041754,
+      "roc_auc": 0.7643676619869375,
+      "specificity": 0.6645871559633028,
+      "threshold": 0.14537213698215762,
+      "true_negative": 1811,
+      "true_positive": 360
     }
   },
   "monitoring": {
     "alarm_quality": {
-      "alert_precision": 0.2630457933972311,
-      "alerts": 1878,
-      "alerts_per_day": 15.65,
+      "alert_precision": 0.25945378151260506,
+      "alerts": 1904,
+      "alerts_per_day": 15.866666666666667,
       "failure_capture_rate": 0.7351190476190477,
-      "false_alerts": 1384,
+      "false_alerts": 1410,
       "median_lead_time_hours": 16.0,
       "missed_failures": 178
     },

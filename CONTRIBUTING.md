@@ -5,8 +5,10 @@
 3. Do not add production identifiers, secrets or operational credentials.
 4. Run `ruff check .`, `ruff format --check .` and
    `pytest --cov=manufacturing_ct --cov-fail-under=90`.
-5. If model logic changes, rerun the pipeline and update metric-backed
-   deliverables from the new outputs.
+5. If model logic or any pinned dependency changes (including Dependabot bumps),
+   rerun `python -m manufacturing_ct.pipeline --config configs/base.yaml`, commit the
+   regenerated `artifacts/` and `docs/governance/` files in the same change and update
+   metric-backed deliverables. CI fails when a rerun drifts from the committed evidence.
 6. Explain any effect on temporal leakage, calibration, thresholds,
    decision-policy cost assumptions and human approval.
 

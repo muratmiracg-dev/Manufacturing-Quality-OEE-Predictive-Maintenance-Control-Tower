@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: python -m pip install ruff==0.12.8
+      - run: python -m pip install ruff==0.16.4
       - run: ruff check .
       - run: ruff format --check .
 
@@ -56,4 +56,28 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/check_artifacts.py
+
+  reproducibility:
+    name: Reproducible Evidence
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e .
+      - name: Snapshot committed evidence
+        run: |
+          mkdir -p /tmp/committed/docs
+          cp -r artifacts/results /tmp/committed/results
+          cp -r docs/governance /tmp/committed/docs/governance
+      - name: Rerun deterministic pipeline
+        env:
+          MPLCONFIGDIR: /tmp/manufacturing-mpl
+        run: python -m manufacturing_ct.pipeline --config configs/base.yaml
+      - name: Regenerated evidence matches committed artifacts
+        run: |
+          python scripts/compare_artifacts.py /tmp/committed/results artifacts/results
+          python scripts/compare_artifacts.py /tmp/committed/docs/governance docs/governance
 

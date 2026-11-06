@@ -16,14 +16,14 @@ control limits are separated from specifications, and X-bar/R, I-MR, p and u
 charts are selected according to the actual data structure. For predictive
 maintenance, I used chronological model-fit, calibration, validation and
 out-of-time periods with 24-hour purge gaps. The Random Forest champion reached
-0.7489 ROC-AUC and 0.3887 PR-AUC on OOT data. I did not hide the trade-off: at
-73.51% recall the OOT alarm rate was 43.11%, so the monitoring runbook treats
+0.7487 ROC-AUC and 0.3866 PR-AUC on OOT data. I did not hide the trade-off: at
+73.51% recall the OOT alarm rate was 43.71%, so the monitoring runbook treats
 review capacity as an operational constraint.
 
 Finally, SHAP drivers feed a cost-risk policy, but the service stays
 recommendation-only and requires human approval. The platform includes
-FastAPI, PostgreSQL, Power BI, Excel, containers, monitoring and 35 tests with
-95.30% coverage.
+FastAPI, PostgreSQL, Power BI, Excel, containers, monitoring and 69 tests with
+95.06% coverage.
 
 ## Likely follow-up: Why not optimize accuracy?
 

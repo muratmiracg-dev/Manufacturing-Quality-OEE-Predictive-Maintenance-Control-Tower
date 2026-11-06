@@ -3,7 +3,7 @@
 [![CI](https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower/actions/workflows/ci.yml/badge.svg)](https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower/actions/workflows/codeql.yml/badge.svg)](https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower/actions/workflows/codeql.yml)
 [![Security](https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower/actions/workflows/security.yml/badge.svg)](https://github.com/muratmiracg-dev/Manufacturing-Quality-OEE-Predictive-Maintenance-Control-Tower/actions/workflows/security.yml)
-[![Coverage](https://img.shields.io/badge/coverage-95.30%25-2DBE8C)](coverage.xml)
+[![Coverage](https://img.shields.io/badge/coverage-95.06%25-2DBE8C)](coverage.xml)
 [![Data](https://img.shields.io/badge/data-100%25%20synthetic-00A6A6)](docs/data_contract.md)
 [![Mode](https://img.shields.io/badge/mode-recommendation--only-FF6B00)](docs/adr/003-recommendation-only.md)
 
@@ -33,17 +33,23 @@ The committed snapshot uses seed `20260729`, 4 lines, 12 machines, 4 products,
 | Synthetic Cost of Poor Quality | 12,936,905.5 cost units |
 | MTBF / MTTR | 145.96 h / 1.73 h |
 | Champion / Challenger | Random Forest / Logistic Regression |
-| OOT ROC-AUC / PR-AUC | 0.7489 / 0.3887 |
-| OOT Brier / ECE | 0.1137 / 0.0164 |
-| OOT Precision / Recall | 26.30% / 73.51% |
-| Validation-selected threshold | 0.1478 |
-| OOT alarm rate / median lead time | 43.11% / 16 h |
-| Tests / coverage | 35 passed / **95.30%** |
+| OOT ROC-AUC / PR-AUC | 0.7487 / 0.3866 |
+| OOT Brier / ECE | 0.1138 / 0.0161 |
+| OOT Precision / Recall | 25.95% / 73.51% |
+| Validation-selected threshold | 0.1454 |
+| OOT alarm rate / median lead time | 43.71% / 16 h |
+| Tests / coverage | 69 passed / **95.06%** |
 
 PR-AUC should be read against the OOT positive rate of 15.43%; the achieved
-0.3887 is approximately 2.52x the no-skill baseline. The OOT alarm rate exceeds
+0.3866 is approximately 2.51x the no-skill baseline. The OOT alarm rate exceeds
 the validation capacity cap of 40%, which is intentionally surfaced as a
 monitoring finding rather than hidden.
+
+CI reruns the pipeline on every pull request and fails if the regenerated CSV/JSON
+evidence drifts from the committed files. The Excel workbook, executive deck and PDF
+report under `deliverables/` are static snapshots built outside the pipeline; they still
+quote the pre-refresh model metrics (OOT PR-AUC 0.3887) until their next rebuild, and the
+`artifacts/` and `docs/governance/` outputs are authoritative.
 
 ## Architecture
 
