@@ -133,7 +133,7 @@
         "selection_score": 0.4058781619492102,
         "validation_at_0_5": {
           "alert_rate": 0.019350811485642945,
-          "brier_score": 0.10983260772972504,
+          "brier_score": 0.10983260772972506,
           "ece_10_bin": 0.026252794894783646,
           "expected_cost_per_observation": 1120.318352059925,
           "f1": 0.11829944547134935,
@@ -184,8 +184,8 @@
     },
     "oot_metrics": {
       "alert_rate": 0.43709825528007346,
-      "brier_score": 0.11381056075462312,
-      "ece_10_bin": 0.01610040472056083,
+      "brier_score": 0.11381056075462313,
+      "ece_10_bin": 0.016100404720560825,
       "expected_cost_per_observation": 472.5665748393021,
       "f1": 0.38354037267080743,
       "false_negative": 178,
@@ -230,6 +230,7 @@
     },
     "threshold": {
       "alert_rate": 0.3976279650436954,
+      "constraints_met": true,
       "expected_cost_per_observation": 425.49937578027465,
       "f1": 0.4107244723331432,
       "precision": 0.282574568288854,
@@ -238,7 +239,7 @@
     },
     "validation_metrics": {
       "alert_rate": 0.3976279650436954,
-      "brier_score": 0.10983260772972504,
+      "brier_score": 0.10983260772972506,
       "ece_10_bin": 0.026252794894783646,
       "expected_cost_per_observation": 425.49937578027465,
       "f1": 0.4107244723331432,

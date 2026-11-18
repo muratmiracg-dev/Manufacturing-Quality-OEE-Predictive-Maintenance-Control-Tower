@@ -4,6 +4,13 @@
 
 ### Fixed
 
+- `select_threshold` silently ignored the recall floor and the 40% review-capacity cap
+  when no threshold met both: it fell back to the unconstrained minimum-cost threshold,
+  which could alert on 80% of cases with nothing in the outputs to say so. It now keeps
+  the capacity cap, takes the highest recall within it, and records
+  `constraints_met: false` on the threshold (`model.threshold` in `pipeline_metrics.json`
+  and the governance snapshot). The current threshold is feasible; other evidence is
+  unchanged.
 - Regenerated the committed evidence with the pinned dependency set. The August 2026
   refresh (#10: scikit-learn 1.8.0 -> 1.9.0, pandas 2.2 -> 3.0, shap 0.49 -> 0.51) did not
   rerun the pipeline, so the API loaded a model bundle pickled with scikit-learn 1.8.0

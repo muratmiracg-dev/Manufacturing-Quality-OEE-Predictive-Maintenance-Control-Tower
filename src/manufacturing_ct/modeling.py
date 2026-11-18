@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from itertools import pairwise
 from pathlib import Path
 from typing import Any
@@ -72,8 +72,9 @@ class ThresholdResult:
     recall: float
     f1: float
     alert_rate: float
+    constraints_met: bool = True
 
-    def to_dict(self) -> dict[str, float]:
+    def to_dict(self) -> dict[str, float | bool]:
         return asdict(self)
 
 
@@ -242,8 +243,17 @@ def select_threshold(
     feasible = [
         row for row in rows if row.recall >= minimum_recall and row.alert_rate <= maximum_alert_rate
     ]
-    pool = feasible or rows
-    return min(pool, key=lambda row: (row.expected_cost_per_observation, -row.f1))
+    if feasible:
+        return min(feasible, key=lambda row: (row.expected_cost_per_observation, -row.f1))
+    # No threshold meets both limits. The review capacity is an operational ceiling,
+    # so stay within it and recover as much recall as possible, and record that the
+    # recall floor is not met instead of silently returning an unconstrained optimum.
+    within_capacity = [row for row in rows if row.alert_rate <= maximum_alert_rate] or rows
+    best = min(
+        within_capacity,
+        key=lambda row: (-row.recall, row.expected_cost_per_observation, -row.f1),
+    )
+    return replace(best, constraints_met=False)
 
 
 def expected_calibration_error(
