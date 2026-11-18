@@ -106,3 +106,22 @@ def test_modeling_rejects_bad_partitions(modeling_frame: pd.DataFrame) -> None:
 def test_expected_cost_rejects_invalid_inputs(truth, predicted, fn_cost, fp_cost):
     with pytest.raises(ValueError):
         expected_classification_cost(np.asarray(truth), np.asarray(predicted), fn_cost, fp_cost)
+
+
+def test_threshold_reports_infeasible_policy_instead_of_ignoring_it() -> None:
+    truth = np.array([1, 1, 1, 1, 0, 0, 0, 0, 0, 0])
+    probability = np.array([0.9, 0.8, 0.3, 0.2, 0.7, 0.6, 0.5, 0.4, 0.1, 0.05])
+    feasible = select_threshold(
+        truth, probability, 10, 1, minimum_recall=0.5, maximum_alert_rate=0.3
+    )
+    assert feasible.constraints_met
+    assert feasible.recall >= 0.5 and feasible.alert_rate <= 0.3
+
+    # Recall >= 0.75 needs alerts on at least 8 of 10 rows, above the 30% capacity.
+    infeasible = select_threshold(
+        truth, probability, 10, 1, minimum_recall=0.75, maximum_alert_rate=0.3
+    )
+    assert not infeasible.constraints_met
+    assert infeasible.alert_rate <= 0.3
+    assert infeasible.recall == 0.5
+    assert infeasible.to_dict()["constraints_met"] is False
